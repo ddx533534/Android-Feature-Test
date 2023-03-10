@@ -1,0 +1,62 @@
+plugins {
+    id 'com.android.application'
+}
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion "28.0.3"
+
+    defaultConfig {
+        applicationId "com.example.AndroidFeature"
+        minSdkVersion 27
+        targetSdkVersion 28
+        versionCode Integer.parseInt(project.VERSION_CODE)
+        versionName project.VERSION_NAME
+
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        sankuai {
+            //密钥的MD5 B3:54:61:04:73:E3:C7:D6:B8:E3:06:4C:11:53:3D:5C
+            storeFile file("keystore/meituan-debug.keystore")
+            storePassword "1234567"
+            keyAlias "meituan"
+            keyPassword "12345678"
+        }
+    }
+
+    flavorDimensions "mode"
+    productFlavors {
+
+        paid {
+//            applicationIdSuffix ".paid"
+            flavorDimensions "mode"
+            manifestPlaceholders = [app_icon: "paid~"]
+
+
+        }
+
+        free {
+//            applicationIdSuffix ".free"
+            flavorDimensions "mode"
+            manifestPlaceholders = [app_icon: "free~"]
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.sankuai
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    api 'com.android.support:appcompat-v7:28.0.0'
+    api 'com.sankuai.android.jarvis:library:0.0.3'
+}

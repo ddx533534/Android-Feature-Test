@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.androidfeature">
+
+    <application
+        android:allowBackup="true"
+        android:appComponentFactory="whateverString"
+        android:icon="@mipmap/ic_launcher"
+        android:label="${app_icon}"
+        android:supportsRtl="true"
+        tools:replace="android:appComponentFactory,android:label">
+        <activity android:name=".Activity.SensorActivity"></activity>
+        <activity android:name=".Activity.PicAnimationActivity" />
+        <activity android:name=".Activity.ClickTestActivity" />
+        <activity
+            android:name=".Activity.BezierCurveActivity"
+            android:label="BezierCurve" />
+        <activity
+            android:name=".Activity.CurvePathActivity"
+            android:label="CurvePath" />
+        <activity
+            android:name=".Activity.MarqueeActivity"
+            android:label="Marquee" />
+        <activity
+            android:name=".Activity.ARouteActivity"
+            android:exported="true"
+            android:label="ARoute"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="test"
+                    android:path="/path"
+                    android:scheme="wednesday" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

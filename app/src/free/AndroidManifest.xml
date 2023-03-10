@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.androidfeature">
+
+    <application
+        android:appComponentFactory="whateverString"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="${app_icon}"
+        android:supportsRtl="true"
+        tools:replace="android:label"/>
+</manifest>

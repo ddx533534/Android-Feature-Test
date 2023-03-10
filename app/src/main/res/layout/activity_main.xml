@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/start_dcep"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动数币" />
+    <Button
+        android:id="@+id/start_curve_path"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动绘制页面" />
+    <Button
+        android:id="@+id/start_marquee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动跑马灯页面" />
+
+    <Button
+        android:id="@+id/start_bezier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动贝塞尔曲线页面" />
+
+    <Button
+        android:id="@+id/start_asynTask"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动异步任务" />
+    <Button
+        android:id="@+id/start_click_test"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动点击测试页面" />
+
+    <Button
+        android:id="@+id/start_picture_animation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="启动图片动画测试" />
+</LinearLayout>
