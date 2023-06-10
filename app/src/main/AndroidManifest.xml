@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.androidfeature">
 
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:allowBackup="true"
         android:appComponentFactory="whateverString"
@@ -10,7 +12,8 @@
         android:label="${app_icon}"
         android:supportsRtl="true"
         tools:replace="android:appComponentFactory,android:label">
-        <activity android:name=".Activity.SensorActivity"></activity>
+        <activity android:name=".Activity.OnRestoreActivity"></activity>
+        <activity android:name=".Activity.SensorActivity" />
         <activity android:name=".Activity.PicAnimationActivity" />
         <activity android:name=".Activity.ClickTestActivity" />
         <activity

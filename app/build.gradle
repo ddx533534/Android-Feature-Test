@@ -59,4 +59,7 @@ android {
 dependencies {
     api 'com.android.support:appcompat-v7:28.0.0'
     api 'com.sankuai.android.jarvis:library:0.0.3'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 }
