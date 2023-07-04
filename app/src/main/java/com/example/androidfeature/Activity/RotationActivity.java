@@ -11,8 +11,12 @@ import android.view.Surface;
 import com.example.androidfeature.R;
 
 /**
- * 设备旋转和 activity 旋转时一致性判断，可以用于屏幕旋转场景，比如悬浮球贴边等。
- * 参考：https://mp.weixin.qq.com/s/QgxDTYkVxLJXrWpuiSIa0w
+ * 设备旋转和 activity 旋转时一致性判断，可以用于屏幕旋转场景，比如悬浮球贴边等。<br/>
+ * 1. 如果 Activity 支持屏幕旋转，但没有配置 android:configChanges="orientation|screenSize"，会触发销毁重建，无法满足需求，因此都会配置该参数<br/>
+ * 2. 如果 Activity 配置参数，屏幕旋转时触发 onConfigurationChanged 回调，这样在屏幕旋转的时候就可以监听到屏幕的方向，缺点是只能判断设备的水平和垂直方向<br/>
+ *    无法判断 activity 的方向；该回调在横屏之间的旋转(90->270)也无法触发。<br/>
+ * 3. 如果需要判断真实的 Activity 方向与当前设备是否一致，需要监听设备角度变化进行判断<br/>
+ * 参考：https://mp.weixin.qq.com/s/QgxDTYkVxLJXrWpuiSIa0w<br/>
  */
 public class RotationActivity extends Activity {
     public static final String TAG = "RotationActivity_Log";
@@ -74,6 +78,14 @@ public class RotationActivity extends Activity {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        Log.d(TAG, "屏幕发生旋转");
+        // 只能在横屏和竖屏之间的切换才触发该回调，横屏之间的切换是无法触发回调的！！！因此需要借助角度监听来实现。
+        int deviceOrientation  = newConfig.orientation;
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
@@ -125,11 +137,5 @@ public class RotationActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Log.d(TAG, "onRestoreInstanceState");
-    }
-
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        Log.d(TAG, "屏幕发生旋转");
     }
 }
