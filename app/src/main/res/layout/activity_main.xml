@@ -62,4 +62,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="测试 Intent 大小" />
+
+    <Button
+        android:id="@+id/test_rotation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试旋转 Activity" />
 </LinearLayout>

@@ -20,6 +20,7 @@ import com.example.androidfeature.Activity.ClickTestActivity;
 import com.example.androidfeature.Activity.CurvePathActivity;
 import com.example.androidfeature.Activity.MarqueeActivity;
 import com.example.androidfeature.Activity.PicAnimationActivity;
+import com.example.androidfeature.Activity.RotationActivity;
 import com.example.androidfeature.concurrent.ConcurrentTask;
 import com.sankuai.android.jarvis.Jarvis;
 
@@ -97,7 +98,10 @@ public class MainActivity extends Activity {
             intent.putExtra("json", content.getBytes());
             startActivity(intent);
         });
-
+        findViewById(R.id.test_rotation).setOnClickListener(v -> {
+            Intent intent = new Intent(this, RotationActivity.class);
+            startActivity(intent);
+        });
 
     }
 
