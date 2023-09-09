@@ -27,9 +27,4 @@ public class LifeCycleActivity2 extends BaseActivity {
             startActivity(intent);
         });
     }
-
-    @Override
-    protected String getActivityName() {
-        return "LifeCycleActivity2" + toString().split("@")[1];
-    }
 }

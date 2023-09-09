@@ -1,7 +1,6 @@
 package com.example.androidfeature.Activity;
 
 import android.animation.Animator;
-import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Intent;
@@ -38,8 +37,9 @@ public class SplashActivity extends BaseActivity {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                SplashActivity.this.finish();
-                startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                if (!SplashActivity.this.isFinishing() && !SplashActivity.this.isDestroyed()) {
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                }
             }
 
             @Override
@@ -53,5 +53,11 @@ public class SplashActivity extends BaseActivity {
             }
         });
         animatorSet.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
     }
 }

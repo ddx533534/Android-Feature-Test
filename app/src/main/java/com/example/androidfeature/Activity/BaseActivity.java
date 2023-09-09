@@ -81,6 +81,8 @@ public class BaseActivity extends Activity {
     }
 
     protected String getActivityName() {
-        return null;
+        String name = toString();
+        String[] array = name.split("\\.");
+        return array[array.length - 1];
     }
 }

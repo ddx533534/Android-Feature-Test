@@ -315,10 +315,4 @@ public class MainActivity extends BaseActivity {
             Log.d(TAG, "onPostExecute，线程:" + Thread.currentThread().getName());
         }
     }
-
-
-    @Override
-    protected String getActivityName() {
-        return "MainActivity";
-    }
 }
