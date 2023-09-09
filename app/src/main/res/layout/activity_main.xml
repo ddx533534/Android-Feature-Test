@@ -68,4 +68,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="测试旋转 Activity" />
+    <Button
+        android:id="@+id/start_LifeCycleActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="测试生命周期Activity" />
 </LinearLayout>

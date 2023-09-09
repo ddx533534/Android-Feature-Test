@@ -1,6 +1,7 @@
 package com.example.androidfeature.Activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -86,6 +87,13 @@ public class RotationActivity extends Activity {
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.d(TAG, "onRestart");
+
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "onStart");
@@ -119,13 +127,6 @@ public class RotationActivity extends Activity {
         orientationEventListener.disable();
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        Log.d(TAG, "onRestart");
-
-    }
-
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -137,5 +138,17 @@ public class RotationActivity extends Activity {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         Log.d(TAG, "onRestoreInstanceState");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult");
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d(TAG, "intent");
     }
 }

@@ -31,3 +31,9 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+project.tasks.each {
+    it.each {
+        println("task is : " + it.name)
+    }
+}

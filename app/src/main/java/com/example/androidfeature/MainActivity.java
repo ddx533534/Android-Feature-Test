@@ -15,9 +15,11 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.androidfeature.Activity.ARouteActivity;
+import com.example.androidfeature.Activity.BaseActivity;
 import com.example.androidfeature.Activity.BezierCurveActivity;
 import com.example.androidfeature.Activity.ClickTestActivity;
 import com.example.androidfeature.Activity.CurvePathActivity;
+import com.example.androidfeature.Activity.LifeCycleActivity;
 import com.example.androidfeature.Activity.MarqueeActivity;
 import com.example.androidfeature.Activity.PicAnimationActivity;
 import com.example.androidfeature.Activity.RotationActivity;
@@ -36,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class MainActivity extends Activity {
+public class MainActivity extends BaseActivity {
     private ExecutorService executor = Jarvis.newScheduledThreadPool("hhhh", 2);
 
     private static String TAG = "MainActivity_Tag";
@@ -93,13 +95,22 @@ public class MainActivity extends Activity {
         });
         findViewById(R.id.test_intent_size).setOnClickListener(v -> {
             String content = readJsonFile("");
-            Log.d("Intenttest", "size:" + content.getBytes().length/1024.0 + "kb");
+            Log.d("Intenttest", "size:" + content.getBytes().length / 1024.0 + "kb");
             Intent intent = new Intent(this, PicAnimationActivity.class);
             intent.putExtra("json", content.getBytes());
             startActivity(intent);
         });
         findViewById(R.id.test_rotation).setOnClickListener(v -> {
             Intent intent = new Intent(this, RotationActivity.class);
+            startActivity(intent);
+        });
+
+        findViewById(R.id.test_rotation).setOnClickListener(v -> {
+            Intent intent = new Intent(this, RotationActivity.class);
+            startActivity(intent);
+        });
+        findViewById(R.id.start_LifeCycleActivity).setOnClickListener(v -> {
+            Intent intent = new Intent(this, LifeCycleActivity.class);
             startActivity(intent);
         });
 
@@ -305,4 +316,9 @@ public class MainActivity extends Activity {
         }
     }
 
+
+    @Override
+    protected String getActivityName() {
+        return "MainActivity";
+    }
 }

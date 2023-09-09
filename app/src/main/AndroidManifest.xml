@@ -3,23 +3,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.androidfeature">
 
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <application
         android:allowBackup="true"
         android:appComponentFactory="whateverString"
-        android:icon="@mipmap/ic_launcher"
-        android:label="${app_icon}"
+        android:icon="@drawable/basketball"
+        android:label="Hello"
         android:supportsRtl="true"
+        android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory,android:label">
+        <activity android:name=".Activity.SplashActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Activity.LifeCycleActivity2" />
+        <activity android:name=".Activity.BaseActivity" />
+        <activity
+            android:name=".Activity.LifeCycleActivity"
+            android:launchMode="singleTop" />
         <activity
             android:name=".Activity.RotationActivity"
-
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="sensor"
-            />
-
-
+            android:screenOrientation="sensor" />
         <activity android:name=".Activity.OnRestoreActivity" />
         <activity android:name=".Activity.SensorActivity" />
         <activity android:name=".Activity.PicAnimationActivity" />
@@ -49,13 +56,11 @@
                     android:scheme="wednesday" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:launchMode="standard"></activity>
     </application>
+
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>

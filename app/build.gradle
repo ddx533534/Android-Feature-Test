@@ -25,23 +25,23 @@ android {
         }
     }
 
-    flavorDimensions "mode"
-    productFlavors {
-
-        paid {
-//            applicationIdSuffix ".paid"
-            flavorDimensions "mode"
-            manifestPlaceholders = [app_icon: "paid~"]
-
-
-        }
-
-        free {
-//            applicationIdSuffix ".free"
-            flavorDimensions "mode"
-            manifestPlaceholders = [app_icon: "free~"]
-        }
-    }
+//    flavorDimensions "mode"
+//    productFlavors {
+//
+//        paid {
+////            applicationIdSuffix ".paid"
+//            flavorDimensions "mode"
+//            manifestPlaceholders = [app_icon: "paid~"]
+//
+//
+//        }
+//
+//        free {
+////            applicationIdSuffix ".free"
+//            flavorDimensions "mode"
+//            manifestPlaceholders = [app_icon: "free~"]
+//        }
+//    }
 
     buildTypes {
         release {
