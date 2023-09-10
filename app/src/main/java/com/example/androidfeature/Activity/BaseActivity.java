@@ -1,9 +1,16 @@
 package com.example.androidfeature.Activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+
+import com.example.androidfeature.widget.CustomText;
 
 import static com.example.androidfeature.Constants.LIFECYCLE_TAG;
 
@@ -12,8 +19,21 @@ public class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(LIFECYCLE_TAG, getActivityName() + ":onCreate");
-        super.onCreate(savedInstanceState);
+        LayoutInflater.from(this).setFactory2(new LayoutInflater.Factory2() {
+            @Override
+            public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
+                if (!TextUtils.isEmpty(name) && name.contains("TextView")) {
+                    return new CustomText(context, attrs);
+                }
+                return null;
+            }
 
+            @Override
+            public View onCreateView(String name, Context context, AttributeSet attrs) {
+                return onCreateView(null, name, context, attrs);
+            }
+        });
+        super.onCreate(savedInstanceState);
     }
 
     @Override
