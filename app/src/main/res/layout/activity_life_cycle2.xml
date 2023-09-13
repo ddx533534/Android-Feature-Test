@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.LifeCycleActivity2">
+    tools:context=".activity.LifeCycleActivity2">
     <Button
         android:id="@+id/start_new_activity"
         android:layout_width="wrap_content"

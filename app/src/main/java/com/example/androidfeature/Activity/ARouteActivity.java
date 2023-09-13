@@ -1,4 +1,4 @@
-package com.example.androidfeature.Activity;
+package com.example.androidfeature.activity;
 
 
 import android.app.Activity;

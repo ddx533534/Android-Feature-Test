@@ -1,9 +1,7 @@
-package com.example.androidfeature.Activity;
+package com.example.androidfeature.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toolbar;
 
 import com.example.androidfeature.R;
 

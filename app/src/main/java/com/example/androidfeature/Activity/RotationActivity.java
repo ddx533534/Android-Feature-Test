@@ -1,9 +1,8 @@
-package com.example.androidfeature.Activity;
+package com.example.androidfeature.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.OrientationEventListener;

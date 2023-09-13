@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Activity.BezierCurveActivity">
+    tools:context=".activity.BezierCurveActivity">
 
     <com.example.androidfeature.widget.Bezier.BezierCureView
         android:id="@+id/bezier"

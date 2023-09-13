@@ -2,7 +2,6 @@ package com.example.androidfeature;
 
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,17 +11,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.androidfeature.Activity.ARouteActivity;
-import com.example.androidfeature.Activity.BaseActivity;
-import com.example.androidfeature.Activity.BezierCurveActivity;
-import com.example.androidfeature.Activity.ClickTestActivity;
-import com.example.androidfeature.Activity.CurvePathActivity;
-import com.example.androidfeature.Activity.LifeCycleActivity;
-import com.example.androidfeature.Activity.MarqueeActivity;
-import com.example.androidfeature.Activity.PicAnimationActivity;
-import com.example.androidfeature.Activity.RotationActivity;
+import com.example.androidfeature.activity.ARouteActivity;
+import com.example.androidfeature.activity.BaseActivity;
+import com.example.androidfeature.activity.BezierCurveActivity;
+import com.example.androidfeature.activity.ClickTestActivity;
+import com.example.androidfeature.activity.CurvePathActivity;
+import com.example.androidfeature.activity.LifeCycleActivity;
+import com.example.androidfeature.activity.MarqueeActivity;
+import com.example.androidfeature.activity.PicAnimationActivity;
+import com.example.androidfeature.activity.RotationActivity;
+import com.example.androidfeature.activity.ServiceActivity;
 import com.example.androidfeature.concurrent.ConcurrentTask;
 import com.sankuai.android.jarvis.Jarvis;
 
@@ -113,7 +115,20 @@ public class MainActivity extends BaseActivity {
             Intent intent = new Intent(this, LifeCycleActivity.class);
             startActivity(intent);
         });
+        addButton("测试Binder", ServiceActivity.class);
 
+    }
+
+    private void addButton(String name, Class<?> cla) {
+        ViewGroup viewGroup = findViewById(R.id.base_content);
+        ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        Button button = new Button(this);
+        button.setText(name);
+        button.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, cla);
+            startActivity(intent);
+        });
+        viewGroup.addView(button, layoutParams);
     }
 
     public String readJsonFile(String fileName) {
