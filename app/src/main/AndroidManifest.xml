@@ -62,7 +62,10 @@
             android:name=".MainActivity"
             android:launchMode="standard" />
 
-        <service android:name=".service.NoteService" />
+        <service
+            android:name=".service.NoteService"
+            android:multiprocess="true"
+            android:process=":note_service" />
     </application>
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />

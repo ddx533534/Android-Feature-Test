@@ -11,8 +11,12 @@ import com.example.androidfeature.bean.Note;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import static com.example.androidfeature.utils.OSUtils.logCurrentProcess;
+import static com.example.androidfeature.utils.OSUtils.logCurrentThread;
+
 /**
  * note笔记服务，运行在独立的进程中
+ *
  * @author dudongxu
  */
 public class NoteService extends Service {
@@ -21,6 +25,8 @@ public class NoteService extends Service {
     public Binder mBinder = new INoteManager.Stub() {
         @Override
         public Note getNode(int id) throws RemoteException {
+            logCurrentProcess(NoteService.this, "NoteService");
+            logCurrentThread("NoteService");
             if (notes == null || notes.size() == 0) {
                 return null;
             }
@@ -34,6 +40,8 @@ public class NoteService extends Service {
 
         @Override
         public void addNode(int id, String name) {
+            logCurrentProcess(NoteService.this, "NoteService");
+            logCurrentThread("NoteService");
             if (notes == null || notes.size() == 0) {
                 return;
             }
@@ -44,8 +52,8 @@ public class NoteService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        notes.add(new Note(1,"ddx"));
-        notes.add(new Note(2,"ccc"));
+        notes.add(new Note(1, "ddx"));
+        notes.add(new Note(2, "ccc"));
     }
 
     @Override

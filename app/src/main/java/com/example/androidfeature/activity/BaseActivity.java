@@ -12,7 +12,7 @@ import android.view.View;
 
 import com.example.androidfeature.widget.CustomText;
 
-import static com.example.androidfeature.Constants.LIFECYCLE_TAG;
+import static com.example.androidfeature.utils.Constants.LIFECYCLE_TAG;
 
 public class BaseActivity extends Activity {
 

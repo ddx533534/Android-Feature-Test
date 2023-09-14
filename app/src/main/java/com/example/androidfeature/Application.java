@@ -9,7 +9,7 @@ import android.util.Log;
 import com.example.androidfeature.service.NoteManager;
 import com.example.androidfeature.service.NoteService;
 
-import static com.example.androidfeature.Constants.NOTE_MANAGER_TAG;
+import static com.example.androidfeature.utils.Constants.NOTE_MANAGER_TAG;
 
 public class Application extends android.app.Application {
 

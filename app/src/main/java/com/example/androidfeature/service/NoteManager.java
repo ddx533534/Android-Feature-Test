@@ -1,19 +1,12 @@
 package com.example.androidfeature.service;
 
-import android.app.Application;
-import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.IBinder;
-import android.os.RemoteException;
 
 import com.example.androidfeature.INoteManager;
-import com.example.androidfeature.activity.ServiceActivity;
-import com.example.androidfeature.bean.Note;
 
-import static android.content.Context.BIND_AUTO_CREATE;
-
+/**
+ * Note 服务管理类，用于绑定、销毁、使用对应的服务
+ */
 public class NoteManager {
 
     private static IBinder mBinder = null;
