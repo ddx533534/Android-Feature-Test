@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/base_content"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,83 +9,98 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/gray_400"
         android:gravity="center"
         android:padding="10dp"
-        android:background="@color/gray_400"
         android:text="Hello!Welcome to the Android world"
-        android:textSize="20sp"
         android:textColor="@color/black"
+        android:textSize="20sp"
         android:textStyle="bold" />
-    <Button
-        android:id="@+id/start_dcep"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="启动数币" />
 
-    <Button
-        android:id="@+id/start_curve_path"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="启动绘制页面" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/start_marquee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="启动跑马灯页面" />
+        <LinearLayout
+            android:id="@+id/base_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/start_bezier"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="启动贝塞尔曲线页面" />
+            <Button
+                android:id="@+id/start_dcep"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动数币" />
 
-    <Button
-        android:id="@+id/start_asynTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="启动异步任务" />
+            <Button
+                android:id="@+id/start_curve_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动绘制页面" />
 
-    <Button
-        android:id="@+id/start_click_test"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="启动点击测试页面" />
+            <Button
+                android:id="@+id/start_marquee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动跑马灯页面" />
 
-    <Button
-        android:id="@+id/start_picture_animation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="启动图片动画测试" />
+            <Button
+                android:id="@+id/start_bezier"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动贝塞尔曲线页面" />
 
-    <Button
-        android:id="@+id/start_get_contacts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="获取联系人信息" />
+            <Button
+                android:id="@+id/start_asynTask"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动异步任务" />
 
-    <Button
-        android:id="@+id/start_other_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="启动其他 App 的 Activity" />
+            <Button
+                android:id="@+id/start_click_test"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动点击测试页面" />
 
-    <Button
-        android:id="@+id/test_intent_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="测试 Intent 大小" />
+            <Button
+                android:id="@+id/start_picture_animation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动图片动画测试" />
 
-    <Button
-        android:id="@+id/test_rotation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="测试旋转 Activity" />
+            <Button
+                android:id="@+id/start_get_contacts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="获取联系人信息" />
 
-    <Button
-        android:id="@+id/start_LifeCycleActivity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="测试生命周期Activity" />
+            <Button
+                android:id="@+id/start_other_app"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="启动其他 App 的 Activity" />
+
+            <Button
+                android:id="@+id/test_intent_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试 Intent 大小" />
+
+            <Button
+                android:id="@+id/test_rotation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试旋转 Activity" />
+
+            <Button
+                android:id="@+id/start_LifeCycleActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="测试生命周期Activity" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

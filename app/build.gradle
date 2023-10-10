@@ -59,4 +59,5 @@ android {
 dependencies {
     api 'com.android.support:appcompat-v7:28.0.0'
     api 'com.sankuai.android.jarvis:library:0.0.3'
+//    api 'com.squareup.leakcanary:leakcanary-android:2.1'
 }
