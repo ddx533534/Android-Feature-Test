@@ -1,6 +1,8 @@
 package com.example.androidfeature;
 
+import android.annotation.SuppressLint;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.IBinder;
@@ -12,6 +14,9 @@ import com.example.androidfeature.service.NoteService;
 import static com.example.androidfeature.utils.Constants.NOTE_MANAGER_TAG;
 
 public class Application extends android.app.Application {
+
+    @SuppressLint("StaticFieldLeak")
+    public static Context TestLeakMemoryContext = null;
 
     private static ServiceConnection serviceConnection = new ServiceConnection() {
         @Override

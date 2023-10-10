@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.androidfeature">
 
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+
     <application
         android:name=".Application"
         android:allowBackup="true"
@@ -12,7 +14,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory,android:label">
-        <activity android:name=".activity.ServiceActivity"></activity>
+        <provider
+            android:name=".provider.LeakMemoryProvider"
+            android:authorities="leakmemory"
+            android:enabled="true"
+            android:exported="false" />
+
+        <activity android:name=".activity.GcActivity" />
+        <activity android:name=".activity.ServiceActivity" />
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,7 +76,5 @@
             android:multiprocess="true"
             android:process=":note_service" />
     </application>
-
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
 </manifest>

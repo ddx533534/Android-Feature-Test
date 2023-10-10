@@ -20,6 +20,7 @@ import com.example.androidfeature.activity.BaseActivity;
 import com.example.androidfeature.activity.BezierCurveActivity;
 import com.example.androidfeature.activity.ClickTestActivity;
 import com.example.androidfeature.activity.CurvePathActivity;
+import com.example.androidfeature.activity.GcActivity;
 import com.example.androidfeature.activity.LifeCycleActivity;
 import com.example.androidfeature.activity.MarqueeActivity;
 import com.example.androidfeature.activity.PicAnimationActivity;
@@ -116,6 +117,7 @@ public class MainActivity extends BaseActivity {
             startActivity(intent);
         });
         addButton("测试Binder", ServiceActivity.class);
+        addButton("测试内存泄露", GcActivity.class);
 
     }
 
