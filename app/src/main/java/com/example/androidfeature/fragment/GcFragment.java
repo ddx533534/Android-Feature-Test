@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.example.androidfeature.Application;
 import com.example.androidfeature.R;
+import com.example.androidfeature.leakmemory.LeakMemoryTester;
 
 
 public class GcFragment extends Fragment {
@@ -48,7 +49,6 @@ public class GcFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Application.TestLeakMemoryFragment = this;
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -60,5 +60,15 @@ public class GcFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_gc, container, false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }

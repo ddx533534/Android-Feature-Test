@@ -2,6 +2,7 @@ package com.example.androidfeature.leakmemory.watcher;
 
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -25,17 +26,16 @@ public class ObjectWatcher {
     // 主线程-监测内存泄露
     private final Executor executor;
     // 主线程-handler
-    private Handler mainHandler;
+    private final Handler mainHandler;
     // 后台GC线程
-    private Handler backgroundHandler;
+    private final Handler backgroundHandler;
 
     public ObjectWatcher() {
+        this.mainHandler = new Handler(Looper.getMainLooper());
         hashMap = new HashMap<>();
         referenceQueue = new ReferenceQueue<>();
         executor = command -> {
-            if (mainHandler != null) {
-                mainHandler.postDelayed(command, DelayedTime);
-            }
+            mainHandler.postDelayed(command, DelayedTime);
         };
         HandlerThread handlerThread = new HandlerThread("GC-Task");
         handlerThread.start();
@@ -43,19 +43,16 @@ public class ObjectWatcher {
 
     }
 
-    protected void install(@NonNull Application application) {
-        mainHandler = new Handler(application.getMainLooper());
-    }
 
-
-    protected void watch(Object object, String name) {
+    protected synchronized void watch(Object object, String name) {
+        Log.d(TAG, "开始监控，对象:" + name);
         clearReferenceQueue();
         String key = UUID.randomUUID().toString();
         LMWeakReference<?> w = new LMWeakReference<>(key, object, referenceQueue);
         hashMap.put(key, w);
         runGc();
         executor.execute(() -> {
-            Log.d(TAG, "当前线程：" + Thread.currentThread().getName() + "执行内存泄露检测");
+            Log.d(TAG,  "执行内存泄露检测，对象:" + name);
             LMWeakReference<?> w1 = hashMap.get(key);
             if (w1 != null && w1.get() != null) {
                 LMWeakReference<?> w2 = hashMap.get(key);
@@ -89,6 +86,7 @@ public class ObjectWatcher {
      * 后台 GC 线程，延迟执行 GC 任务，将弱可达对象强制加入到队列中
      */
     private void runGc() {
+        Log.d(TAG,"执行 GC");
         backgroundHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -104,7 +102,6 @@ public class ObjectWatcher {
     private void enforcedGC() {
         Runtime.getRuntime()
                 .gc();
-        Log.d(TAG, "当前线程：" + Thread.currentThread().getName() + "正在休眠");
         try {
             Thread.sleep(100);
         } catch (InterruptedException e) {

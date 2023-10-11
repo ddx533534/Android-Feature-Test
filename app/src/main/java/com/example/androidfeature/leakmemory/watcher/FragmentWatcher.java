@@ -7,58 +7,47 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 
 import com.example.androidfeature.Application;
+import com.example.androidfeature.leakmemory.callbacks.ActivityLifeCycleDefaultCallbacks;
 
-public class FragmentWatcher extends ObjectWatcher {
-    @Override
-    public void install(@NonNull Application application) {
-        super.install(application);
-        application.registerActivityLifecycleCallbacks(new android.app.Application.ActivityLifecycleCallbacks() {
+/**
+ * Fragment 内存泄露监控者
+ */
+public class FragmentWatcher implements InstallWatcher {
+    private Application application;
+    private final android.app.Application.ActivityLifecycleCallbacks lifecycleCallbacks;
+
+    public FragmentWatcher(Application application, ObjectWatcher objectWatcher) {
+        this.application = application;
+        this.lifecycleCallbacks = new ActivityLifeCycleDefaultCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
                 activity.getFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
                     @Override
                     public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
-                        super.onFragmentViewDestroyed(fm, f);
-                        watch(f.getView(), f.getClass().getName() + ".view");
+                        objectWatcher.watch(f.getView(), f.getClass().getName() + ".view");
                     }
 
                     @Override
                     public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                        super.onFragmentDestroyed(fm, f);
-                        watch(f.getView(), f.getClass().getName());
+                        objectWatcher.watch(f, f.getClass().getName());
                     }
                 }, true);
             }
+        };
+    }
 
-            @Override
-            public void onActivityStarted(Activity activity) {
 
-            }
+    @Override
+    public void install() {
+        if (application != null) {
+            application.registerActivityLifecycleCallbacks(lifecycleCallbacks);
+        }
+    }
 
-            @Override
-            public void onActivityResumed(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-            }
-
-            @Override
-            public void onActivityDestroyed(Activity activity) {
-
-            }
-        });
+    @Override
+    public void uninstall() {
+        if (application != null) {
+            application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks);
+        }
     }
 }

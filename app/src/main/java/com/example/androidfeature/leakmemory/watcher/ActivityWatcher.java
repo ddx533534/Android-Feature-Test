@@ -1,50 +1,42 @@
 package com.example.androidfeature.leakmemory.watcher;
 
 import android.app.Activity;
-import android.os.Bundle;
 
 import com.example.androidfeature.Application;
+import com.example.androidfeature.leakmemory.callbacks.ActivityLifeCycleDefaultCallbacks;
 
-public class ActivityWatcher extends ObjectWatcher {
+/**
+ * Activity 内存泄露监控者
+ */
+public class ActivityWatcher implements InstallWatcher {
+    private Application application;
+    private android.app.Application.ActivityLifecycleCallbacks lifecycleCallbacks;
 
-    @Override
-    public void install(Application application) {
-        super.install(application);
-        application.registerActivityLifecycleCallbacks(new android.app.Application.ActivityLifecycleCallbacks() {
-            @Override
-            public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-
-            }
-
-            @Override
-            public void onActivityStarted(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityResumed(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityPaused(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivityStopped(Activity activity) {
-
-            }
-
-            @Override
-            public void onActivitySaveInstanceState(Activity activity, Bundle outState) {
-
-            }
-
+    public ActivityWatcher(Application application, ObjectWatcher objectWatcher) {
+        this.application = application;
+        this.lifecycleCallbacks = new ActivityLifeCycleDefaultCallbacks() {
             @Override
             public void onActivityDestroyed(Activity activity) {
-                watch(activity, activity.getClass().getName());
+                if (objectWatcher != null) {
+                    objectWatcher.watch(activity, activity.getClass().getName());
+                } else {
+                    throw new IllegalArgumentException("objectWatcher is null!");
+                }
             }
-        });
+        };
+    }
+
+    @Override
+    public void install() {
+        if (application != null) {
+            application.registerActivityLifecycleCallbacks(lifecycleCallbacks);
+        }
+    }
+
+    @Override
+    public void uninstall() {
+        if (application != null) {
+            application.unregisterActivityLifecycleCallbacks(lifecycleCallbacks);
+        }
     }
 }
