@@ -5,13 +5,14 @@ import org.gradle.api.tasks.compile.JavaCompile
 buildscript {
     repositories {
         mavenLocal()
-        maven { url 'http://depot.sankuai.com/nexus/content/groups/public/' }
+        maven {
+            url 'http://depot.sankuai.com/nexus/content/groups/public/'
+            allowInsecureProtocol = true
+        }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:7.2.2'
         classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.3.61'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
     }
 }
 
@@ -21,9 +22,15 @@ allprojects {
         //本地资源
         mavenLocal()
         //内网 nexus仓库 （代理了大多数外网资源）
-        maven { url 'http://depot.sankuai.com/nexus/content/groups/public/' }
+        maven {
+            url 'http://depot.sankuai.com/nexus/content/groups/public/'
+            allowInsecureProtocol = true
+        }
         //内网 pixel仓库 （代理了更多外网资源）
-        maven { url "http://pixel.sankuai.com/repository/mtdp" }
+        maven {
+            url "http://pixel.sankuai.com/repository/mtdp"
+            allowInsecureProtocol = true
+        }
     }
 
     tasks.withType(JavaCompile) { options.encoding = "UTF-8" }

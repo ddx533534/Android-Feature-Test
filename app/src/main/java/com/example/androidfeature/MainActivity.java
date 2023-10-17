@@ -13,6 +13,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.androidfeature.activity.ARouteActivity;
@@ -28,6 +29,7 @@ import com.example.androidfeature.activity.RotationActivity;
 import com.example.androidfeature.activity.ServiceActivity;
 import com.example.androidfeature.concurrent.ConcurrentTask;
 import com.sankuai.android.jarvis.Jarvis;
+import com.squareup.picasso.Picasso;
 
 
 import java.io.InputStreamReader;
@@ -51,6 +53,9 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ImageView imageView = findViewById(R.id.pic);
+        Picasso.
+        Picasso.get().load("").into(imageView);
         ConcurrentTask.init();
         findViewById(R.id.start_dcep).setOnClickListener(v -> {
             Intent intent = new Intent(this, ARouteActivity.class);
