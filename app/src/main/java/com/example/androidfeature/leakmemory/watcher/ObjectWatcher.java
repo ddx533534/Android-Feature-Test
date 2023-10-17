@@ -3,10 +3,7 @@ package com.example.androidfeature.leakmemory.watcher;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
-import android.support.annotation.NonNull;
 import android.util.Log;
-
-import com.example.androidfeature.Application;
 
 import java.lang.ref.ReferenceQueue;
 import java.lang.ref.WeakReference;

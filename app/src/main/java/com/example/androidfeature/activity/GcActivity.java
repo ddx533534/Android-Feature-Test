@@ -3,6 +3,7 @@ package com.example.androidfeature.activity;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,8 +12,14 @@ import com.example.androidfeature.Application;
 import com.example.androidfeature.R;
 import com.example.androidfeature.fragment.GcFragment;
 import com.example.androidfeature.leakmemory.LeakMemoryTester;
+import com.example.androidfeature.listener.OnRouterResultListener;
 
 import java.lang.ref.ReferenceQueue;
+import java.lang.reflect.Method;
+
+import retrofit2.http.Tag;
+
+import static com.example.androidfeature.provider.LeakMemoryProvider.TAG;
 
 public class GcActivity extends BaseActivity {
 
@@ -46,6 +53,16 @@ public class GcActivity extends BaseActivity {
                 LeakMemoryTester.TestLeakMemoryDialog = dialog;
             }
         });
+        try {
+            Class cl = Class.forName("com.example.androidfeature.listener.OnRouterResultListener");
+            Method[] methods = cl.getDeclaredMethods();
+            for (Method method : methods) {
+                Log.d(TAG, method.getName() + "is defaultMethod?" + method.isDefault());
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

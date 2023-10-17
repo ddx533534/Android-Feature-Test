@@ -1,0 +1,18 @@
+Starting a Gradle Daemon, 1 incompatible Daemon could not be reused, use --status for details
+setting.gradle start
+exec
+setting.gradle end
+settingsEvaluated
+projectsLoaded
+project name:app
+project name:library
+
+> Configure project :
+beforeProject
+task is : clean
+afterProject
+
+> Configure project :app
+beforeProject
+afterProject
+buildFinished
