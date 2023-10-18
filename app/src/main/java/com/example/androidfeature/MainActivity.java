@@ -25,7 +25,6 @@ import com.example.androidfeature.activity.MarqueeActivity;
 import com.example.androidfeature.activity.PicAnimationActivity;
 import com.example.androidfeature.activity.RotationActivity;
 import com.example.androidfeature.activity.ServiceActivity;
-import com.example.androidfeature.concurrent.ConcurrentTask;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStreamReader;
@@ -41,8 +40,9 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ImageView imageView = findViewById(R.id.pic);
-        Picasso.get().load("").into(imageView);
-        ConcurrentTask.init();
+        Picasso.get().load("https://p0.meituan.net/travelcube/f78b0d491cb9a68382d4154c1a50b6104090560.jpg").into(imageView);
+        Picasso.get().load("https://p0.meituan.net/travelcube/f78b0d491cb9a68382d4154c1a50b6104090560.jpg").into(imageView);
+
         findViewById(R.id.start_dcep).setOnClickListener(v -> {
             Intent intent = new Intent(this, ARouteActivity.class);
             startActivity(intent);

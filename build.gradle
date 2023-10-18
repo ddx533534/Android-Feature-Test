@@ -23,6 +23,16 @@ buildscript {
             url 'https://maven.aliyun.com/repository/google'
             allowInsecureProtocol = true
         }
+        maven {
+            url 'http://depot.sankuai.com/nexus/content/groups/public/'
+            allowInsecureProtocol = true
+
+        }
+        //内网 pixel仓库 （代理了更多外网资源）
+        maven {
+            url "http://pixel.sankuai.com/repository/mtdp"
+            allowInsecureProtocol = true
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.2.2'
@@ -42,6 +52,15 @@ allprojects {
         }
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
+            allowInsecureProtocol = true
+        }
+        maven {
+            url 'http://depot.sankuai.com/nexus/content/groups/public/'
+            allowInsecureProtocol = true
+        }
+        //内网 pixel仓库 （代理了更多外网资源）
+        maven {
+            url "http://pixel.sankuai.com/repository/mtdp"
             allowInsecureProtocol = true
         }
     }
