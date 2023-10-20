@@ -25,6 +25,9 @@ import com.example.androidfeature.activity.MarqueeActivity;
 import com.example.androidfeature.activity.PicAnimationActivity;
 import com.example.androidfeature.activity.RotationActivity;
 import com.example.androidfeature.activity.ServiceActivity;
+import com.example.androidfeature.bean.ApplicationGraph;
+import com.example.androidfeature.bean.DaggerApplicationGraph;
+import com.example.androidfeature.bean.UserRepo;
 import com.squareup.picasso.Picasso;
 
 import java.io.InputStreamReader;
@@ -42,7 +45,8 @@ public class MainActivity extends BaseActivity {
         ImageView imageView = findViewById(R.id.pic);
         Picasso.get().load("https://p0.meituan.net/travelcube/f78b0d491cb9a68382d4154c1a50b6104090560.jpg").into(imageView);
         Picasso.get().load("https://p0.meituan.net/travelcube/f78b0d491cb9a68382d4154c1a50b6104090560.jpg").into(imageView);
-
+        ApplicationGraph applicationGraph = DaggerApplicationGraph.create();
+        UserRepo userRepo = applicationGraph.userRepo();
         findViewById(R.id.start_dcep).setOnClickListener(v -> {
             Intent intent = new Intent(this, ARouteActivity.class);
             startActivity(intent);

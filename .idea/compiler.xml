@@ -3,7 +3,7 @@
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="1.7">
       <module name="Android-Feature-Test.app" target="17" />
-      <module name="AndroidFeature.app" target="11" />
+      <module name="AndroidFeature.app" target="17" />
     </bytecodeTargetLevel>
   </component>
 </project>
