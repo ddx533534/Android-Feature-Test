@@ -28,21 +28,6 @@ public class DemoRetrofit {
                 .addConverterFactory(createConverterFactory())
                 .client(createOkHttpClient())
                 .build();
-        retrofit.create(null);
-        Class service = Application.ActivityLifecycleCallbacks.class;
-        Proxy.newProxyInstance(service.getClassLoader(),
-                new Class[]{service}, new InvocationHandler() {
-                    Proxy s;
-                    @Override
-                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                        if (method.getDeclaringClass() == Object.class) {
-                            return method.invoke(this, args);
-                        } else {
-                            return null;
-                        }
-                    }
-                }
-        );
     }
 
     private OkHttpClient createOkHttpClient() {
@@ -58,5 +43,10 @@ public class DemoRetrofit {
                 new GsonBuilder().setLenient().create()
         );
     }
+
+    public static RequestService getRetrofit(){
+        return instance.retrofit.create(RequestService.class);
+    };
+
 
 }

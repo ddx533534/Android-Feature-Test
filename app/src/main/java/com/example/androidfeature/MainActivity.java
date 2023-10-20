@@ -20,7 +20,7 @@ import com.example.androidfeature.activity.BezierCurveActivity;
 import com.example.androidfeature.activity.ClickTestActivity;
 import com.example.androidfeature.activity.CurvePathActivity;
 import com.example.androidfeature.activity.GcActivity;
-import com.example.androidfeature.activity.LifeCycleActivity;
+import com.example.androidfeature.activity.RxJavaActivity;
 import com.example.androidfeature.activity.MarqueeActivity;
 import com.example.androidfeature.activity.PicAnimationActivity;
 import com.example.androidfeature.activity.RotationActivity;
@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity {
             startActivity(intent);
         });
         findViewById(R.id.start_LifeCycleActivity).setOnClickListener(v -> {
-            Intent intent = new Intent(this, LifeCycleActivity.class);
+            Intent intent = new Intent(this, RxJavaActivity.class);
             startActivity(intent);
         });
         addButton("测试Binder", ServiceActivity.class);

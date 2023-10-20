@@ -13,16 +13,16 @@ public class LifeCycleActivity2 extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_life_cycle2);
         findViewById(R.id.start_new_activity).setOnClickListener(v -> {
-            Intent intent = new Intent(this, LifeCycleActivity.class);
+            Intent intent = new Intent(this, RxJavaActivity.class);
             startActivity(intent);
         });
         findViewById(R.id.start_already_activity).setOnClickListener(v -> {
-            Intent intent = new Intent(this, LifeCycleActivity.class);
+            Intent intent = new Intent(this, RxJavaActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
             startActivity(intent);
         });
         findViewById(R.id.start_multitask_activity).setOnClickListener(v -> {
-            Intent intent = new Intent(this, LifeCycleActivity.class);
+            Intent intent = new Intent(this, RxJavaActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
             startActivity(intent);
         });

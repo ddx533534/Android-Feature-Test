@@ -33,7 +33,7 @@
         <activity android:name=".activity.LifeCycleActivity2" />
         <activity android:name=".activity.BaseActivity" />
         <activity
-            android:name=".activity.LifeCycleActivity"
+            android:name=".activity.RxJavaActivity"
             android:launchMode="singleTop" />
         <activity
             android:name=".activity.RotationActivity"
