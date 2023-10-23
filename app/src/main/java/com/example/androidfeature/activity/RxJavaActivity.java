@@ -20,6 +20,7 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Function;
 import io.reactivex.rxjava3.functions.Predicate;
+import io.reactivex.rxjava3.plugins.RxJavaPlugins;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
 public class RxJavaActivity extends BaseActivity {
@@ -107,6 +108,13 @@ public class RxJavaActivity extends BaseActivity {
 
         submitOrder(customerA, restaurant);
         submitOrder(customerB, restaurant);
+        RxJavaPlugins.setOnObservableAssembly(new Function<Observable, Observable>() {
+            @Override
+            public Observable apply(Observable observable) throws Throwable {
+                Log.d(TAG,"Hook create 方法");
+                return observable;
+            }
+        });
     }
 
 
