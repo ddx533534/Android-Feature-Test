@@ -4,7 +4,11 @@ import javax.inject.Inject;
 
 public class UserRemoteDataSource {
 
-    @Inject
-    public UserRemoteDataSource(){
+    public String name;
+    public int id;
+
+    public UserRemoteDataSource(String  name , int id){
+        this.name = name;
+        this.id = id;
     }
 }

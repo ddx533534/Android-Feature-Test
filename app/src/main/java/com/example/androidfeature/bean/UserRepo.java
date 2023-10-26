@@ -2,14 +2,17 @@ package com.example.androidfeature.bean;
 
 import javax.inject.Inject;
 
+
 public class UserRepo {
-    private UserRemoteDataSource userRemoteDataSource;
-    private UserLocalDataSource userLocalDataSource;
+
+    public UserRemoteDataSource userRemoteDataSource;
+
+    public UserLocalDataSource userLocalDataSource;
+
 
     @Inject
-    public UserRepo(UserLocalDataSource localDataSource, UserRemoteDataSource remoteDataSource){
-        this.userLocalDataSource = localDataSource;
-        this.userRemoteDataSource = remoteDataSource;
-
+    public UserRepo(UserLocalDataSource userLocalDataSource, UserRemoteDataSource userRemoteDataSource) {
+        this.userLocalDataSource = userLocalDataSource;
+        this.userRemoteDataSource = userRemoteDataSource;
     }
 }
