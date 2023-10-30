@@ -15,6 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory,android:label">
+        <activity
+            android:name=".activity.KTActivity"
+            android:exported="false" />
+
         <provider
             android:name=".provider.LeakMemoryProvider"
             android:authorities="leakmemory"
