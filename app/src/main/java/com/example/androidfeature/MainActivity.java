@@ -25,11 +25,10 @@ import com.example.androidfeature.activity.PicAnimationActivity;
 import com.example.androidfeature.activity.RotationActivity;
 import com.example.androidfeature.activity.RxJavaActivity;
 import com.example.androidfeature.activity.ServiceActivity;
+import com.example.androidfeature.arch.ui.PhotoActivity;
 import com.example.androidfeature.bean.Message;
 import com.example.androidfeature.bean.UserLocalDataSource;
 import com.example.androidfeature.bean.UserRepo;
-import com.example.androidfeature.di.DaggerUserComponent;
-import com.example.androidfeature.di.UserModule;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -51,11 +50,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        DaggerUserComponent
-                .builder()
-                .userModule(new UserModule())
-                .build()
-                .inject(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         EventBus.getDefault().register(this);
@@ -85,6 +79,8 @@ public class MainActivity extends BaseActivity {
         addButton(this, "测试Rxjava", RxJavaActivity.class);
         addButton(this, "测试Binder", ServiceActivity.class);
         addButton(this, "测试内存泄露", GcActivity.class);
+        addButton(this, "测试图片展示",  PhotoActivity.class);
+
     }
 
 

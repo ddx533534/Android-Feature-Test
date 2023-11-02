@@ -1,13 +1,13 @@
 package com.example.androidfeature.utils;
 
+import static androidx.core.content.ContextCompat.getSystemService;
+import static com.example.androidfeature.utils.Constants.OS_TAG;
+
 import android.app.ActivityManager;
 import android.content.Context;
 import android.util.Log;
 
 import java.util.List;
-
-import static android.support.v4.content.ContextCompat.getSystemService;
-import static com.example.androidfeature.utils.Constants.OS_TAG;
 
 public class OSUtils {
 

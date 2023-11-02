@@ -1,5 +1,5 @@
 package com.example.androidfeature.listener
 
 interface TypedClass<T> {
-    fun post(parameter: T)
+    suspend fun post(parameter: T)
 }

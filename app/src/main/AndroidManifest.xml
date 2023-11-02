@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Application"
@@ -14,7 +15,11 @@
         android:label="Hello"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:requestLegacyExternalStorage="true"
         tools:replace="android:appComponentFactory,android:label">
+        <activity
+            android:name=".arch.ui.PhotoActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.KTActivity"
             android:exported="false" />
@@ -27,7 +32,9 @@
 
         <activity android:name=".activity.GcActivity" />
         <activity android:name=".activity.ServiceActivity" />
-        <activity android:name=".activity.SplashActivity">
+        <activity
+            android:name=".activity.SplashActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

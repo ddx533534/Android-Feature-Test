@@ -4,9 +4,11 @@ import android.content.Context;
 import android.graphics.Color;
 import android.util.AttributeSet;
 
+import androidx.appcompat.widget.AppCompatTextView;
+
 import java.util.HashMap;
 
-public class CustomText extends android.support.v7.widget.AppCompatTextView {
+public class CustomText extends AppCompatTextView {
     public CustomText(Context context) {
         super(context);
     }
