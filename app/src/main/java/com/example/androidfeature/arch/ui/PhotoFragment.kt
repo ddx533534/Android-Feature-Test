@@ -46,6 +46,7 @@ class PhotoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_photo_list, container, false)
+        val progressView = view.findViewById<TextView>(R.id.progress)
         val recyclerView = view.findViewById<RecyclerView>(R.id.list)
         val folder = view.findViewById<TextView>(R.id.folder)
         val button = view.findViewById<Button>(R.id.next_folder)
@@ -60,6 +61,9 @@ class PhotoFragment : Fragment() {
                 // 数据变更后向上传递，UI 更新
                 folder.text = it.folderName
             }
+        })
+        viewModel._progress.observe(this, Observer {
+            progressView.text = """$it%"""
         })
 
         button.setOnClickListener {
