@@ -2,11 +2,14 @@ package com.example.androidfeature.arch.data
 
 import android.app.Application
 import android.provider.MediaStore
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
+import com.example.androidfeature.activity.TAG
 import com.example.androidfeature.bean.PhotoFolder
 import com.example.androidfeature.utils.hasGalleryPermission
+import kotlin.math.roundToInt
 
 class PhotoViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -74,12 +77,14 @@ class PhotoViewModel(application: Application) : AndroidViewModel(application) {
                     photoFolderMap.getOrPut(folderID) { PhotoFolder(folderName = folderName) }
                 photoFolder.photoList.add(photoPath)
 
-                curProgress = (cursor.position.toDouble() / count * 100).toInt()
+                curProgress = (cursor.position.toDouble() / count * 100).roundToInt()
+                Log.d(TAG,"""$curProgress""")
                 if (curProgress - preprogress >= interval) {
                     progress.postValue(curProgress)
                     preprogress = curProgress
                 }
             }
+            progress.postValue(100)
         }
         photoFolders.addAll(photoFolderMap.values)
         return photoFolders.toList()

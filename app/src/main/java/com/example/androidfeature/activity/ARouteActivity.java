@@ -20,4 +20,6 @@ public class ARouteActivity extends Activity {
         setContentView(R.layout.activity_route);
         EventBus.getDefault().post(new Message(Message.MsgType.CLOSE_DIALOG));
     }
+
+
 }
