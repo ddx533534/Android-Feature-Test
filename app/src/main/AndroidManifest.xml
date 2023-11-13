@@ -13,10 +13,13 @@
         android:appComponentFactory="whateverString"
         android:icon="@drawable/basketball"
         android:label="Hello"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:requestLegacyExternalStorage="true"
         tools:replace="android:appComponentFactory,android:label">
+        <activity
+            android:name=".activity.BarcodeActivity"
+            android:exported="false" />
         <activity
             android:name=".arch.ui.PhotoActivity"
             android:exported="false" />
@@ -41,7 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.LifeCycleActivity2" />
         <activity android:name=".activity.BaseActivity" />
         <activity
             android:name=".activity.RxJavaActivity"

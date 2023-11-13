@@ -61,12 +61,12 @@ class KTActivity : AppCompatActivity(), TypedClass<Int> {
     }
 
 
-    fun copyToFruits(from: Array<Fruit>, to: Array<Fruit>) {
-        val minSize = min(from?.size ?: 0, to?.size ?: 0)
-        for (i in 0 until minSize) {
-            to[i] = from[i]
-        }
-    }
+//    fun copyToFruits(from: Array<Fruit>, to: Array<Fruit>) {
+//        val minSize = min(from?.size ?: 0, to?.size ?: 0)
+//        for (i in 0 until minSize) {
+//            to[i] = from[i]
+//        }
+//    }
 
     // out 协变 允许使用 Fruit 以及 Fruit 的派生类
     fun copyToFruits(from: Array<out Fruit>, to: Array<Fruit>) {

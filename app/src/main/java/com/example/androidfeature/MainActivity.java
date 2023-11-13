@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.androidfeature.activity.ARouteActivity;
+import com.example.androidfeature.activity.BarcodeActivity;
 import com.example.androidfeature.activity.BaseActivity;
 import com.example.androidfeature.activity.BezierCurveActivity;
 import com.example.androidfeature.activity.ClickTestActivity;
@@ -59,6 +60,7 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initButton() {
+        addButton(this, "测试二维码展示",   BarcodeActivity.class);
         addButton(this, "测试 Dagger 注入", v -> {
             Toast.makeText(this, "UserRepo is null?" + (userRepo == null)
                     + "\n userRepo的信息" + (userRepo.userRemoteDataSource.name), Toast.LENGTH_SHORT).show();

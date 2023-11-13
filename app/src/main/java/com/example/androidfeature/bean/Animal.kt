@@ -1,4 +1,4 @@
-package com.example.androidfeature.activity
+package com.example.androidfeature.bean
 
 open class Animal
 
