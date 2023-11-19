@@ -14,7 +14,6 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.androidfeature.activity.ARouteActivity;
 import com.example.androidfeature.activity.BarcodeActivity;
 import com.example.androidfeature.activity.BaseActivity;
 import com.example.androidfeature.activity.BezierCurveActivity;
@@ -68,7 +67,6 @@ public class MainActivity extends BaseActivity {
         addButton(this, "获取联系人信息", v -> {
             readContacts();
         });
-        addButton(this, "启动路由页面", ARouteActivity.class);
         addButton(this, "启动绘制页面", CurvePathActivity.class);
         addButton(this, "启动跑马灯页面", MarqueeActivity.class);
         addButton(this, "启动贝塞尔曲线页面", BezierCurveActivity.class);

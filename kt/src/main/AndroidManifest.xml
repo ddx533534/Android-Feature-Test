@@ -3,4 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.androidfeature">
 
+    <application>
+        <activity
+            android:name="com.ddx.kt.ui.InfoActivity"
+            android:exported="false" />
+    </application>
+
 </manifest>

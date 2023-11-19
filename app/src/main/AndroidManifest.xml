@@ -52,7 +52,6 @@
             android:name=".activity.RotationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="sensor" />
-        <activity android:name=".activity.OnRestoreActivity" />
         <activity android:name=".activity.SensorActivity" />
         <activity android:name=".activity.PicAnimationActivity" />
         <activity android:name=".activity.ClickTestActivity" />
