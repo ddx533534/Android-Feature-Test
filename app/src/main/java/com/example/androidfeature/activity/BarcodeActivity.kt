@@ -106,7 +106,7 @@ class BarcodeActivity : ComponentActivity() {
                 onClick = {
                     if (codeStr.trim().isNotEmpty()) {
                         bitmap =
-                            ZxingUtils.createBarCode(codeStr, BarcodeFormat.UPC_A, width, height)
+                            ZxingUtils.createBarCode(codeStr, BarcodeFormat.CODABAR, width, height)
                                 ?.asImageBitmap() ?: defaultBitmap
                     }
                 }, modifier = Modifier.padding(top = 30.dp)
