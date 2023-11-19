@@ -9,33 +9,11 @@ buildscript {
     repositories {
         mavenLocal()
         mavenCentral()
-        google()
-        maven {
-            url 'https://jitpack.io'
-            allowInsecureProtocol = true
-        }
-        maven {
-            url 'https://maven.aliyun.com/repository/central'
-            allowInsecureProtocol = true
-        }
-        maven {
-            url 'https://maven.aliyun.com/repository/public'
-            allowInsecureProtocol = true
-        }
-        maven {
-            url 'https://maven.aliyun.com/repository/google'
-            allowInsecureProtocol = true
-        }
-        maven {
-            url 'http://depot.sankuai.com/nexus/content/groups/public/'
-            allowInsecureProtocol = true
-
-        }
-        //内网 pixel仓库 （代理了更多外网资源）
-        maven {
-            url "http://pixel.sankuai.com/repository/mtdp"
-            allowInsecureProtocol = true
-        }
+        // 阿里云国内镜像地址
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
     }
     dependencies {
         classpath "com.android.tools.build:gradle:${versons['gradle_version']}"
@@ -48,24 +26,12 @@ allprojects {
     repositories {
         //本地资源
         mavenLocal()
+        mavenCentral()
         // 阿里云国内镜像地址
-        maven {
-            url 'http://maven.aliyun.com/nexus/content/groups/public/'
-            allowInsecureProtocol = true
-        }
-        maven {
-            url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'
-            allowInsecureProtocol = true
-        }
-        maven {
-            url 'http://depot.sankuai.com/nexus/content/groups/public/'
-            allowInsecureProtocol = true
-        }
-        //内网 pixel仓库 （代理了更多外网资源）
-        maven {
-            url "http://pixel.sankuai.com/repository/mtdp"
-            allowInsecureProtocol = true
-        }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/nexus/content/repositories/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
     }
 
     tasks.withType(JavaCompile) { options.encoding = "UTF-8" }

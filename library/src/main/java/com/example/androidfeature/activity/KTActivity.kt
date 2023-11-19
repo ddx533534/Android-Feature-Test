@@ -1,7 +1,7 @@
 package com.example.androidfeature.activity
 
 
-import androidx.appcompat.app.AppCompatActivity
+import android.app.Activity
 import com.example.androidfeature.listener.TypedClass
 import kotlin.math.min
 
@@ -24,7 +24,7 @@ interface Transformer1<out T> {
 }
 
 
-class KTActivity : AppCompatActivity(), TypedClass<Int> {
+class KTActivity : Activity(), TypedClass<Int> {
     override suspend fun post(parameter: Int) {
     }
 //
