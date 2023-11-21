@@ -1,4 +1,4 @@
-package com.ddx.kt.ui
+package com.ddx.kt.ui.compose
 
 import android.app.Activity
 import android.content.Intent
@@ -24,6 +24,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import com.ddx.kt.ui.activity.LoginActivity
 import com.ddx.kt.viewmodel.LoginState
 import com.ddx.kt.viewmodel.UserViewModel
 import com.example.androidfeature.R
@@ -40,7 +41,6 @@ fun welcome(userViewModel: UserViewModel) {
                         name = result.data?.getStringExtra("name") ?: "",
                         icon = result.data?.getStringExtra("name") ?: "",
                         intro = result.data?.getStringExtra("name") ?: "",
-                        loginState = result.data?.getIntExtra("name", 1),
                     )
                 }
 

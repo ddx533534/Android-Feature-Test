@@ -5,10 +5,10 @@
 
     <application>
         <activity
-            android:name="com.ddx.kt.ui.LoginActivity"
+            android:name="com.ddx.kt.ui.activity.LoginActivity"
             android:exported="false" />
         <activity
-            android:name="com.ddx.kt.ui.InfoActivity"
+            android:name="com.ddx.kt.ui.activity.InfoActivity"
             android:exported="false" />
     </application>
 

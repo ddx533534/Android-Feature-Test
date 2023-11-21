@@ -17,7 +17,7 @@ import com.ddx.kt.viewmodel.LoginState
 @Entity
 data class User(
     @PrimaryKey val name: String,
-    @ColumnInfo(name = "password") val password: String?,
+    @ColumnInfo(name = "password") val password: String,
     @ColumnInfo(name = "icon") val icon: String?,
     @ColumnInfo(name = "intro") val intro: String?,
     @ColumnInfo(name = "loginState") val loginState: LoginState?,
@@ -29,6 +29,9 @@ data class User(
 interface UserDao {
     @Query("SELECT * FROM user ORDER BY lastLoginTime DESC LIMIT 1")
     fun getUser(): User
+
+    @Query("SELECT * FROM user where name ==(:username) AND password ==(:password) LIMIT 1")
+    fun checkUser(username: String, password: String): User
 
     @Insert
     fun insert(vararg users: User)

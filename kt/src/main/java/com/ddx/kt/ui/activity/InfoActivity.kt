@@ -1,4 +1,4 @@
-package com.ddx.kt.ui
+package com.ddx.kt.ui.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -25,6 +25,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.ddx.kt.ui.compose.Home
+import com.ddx.kt.ui.compose.Order
+import com.ddx.kt.ui.compose.Profile
 import com.ddx.kt.viewmodel.UserViewModel
 import com.example.androidfeature.R
 
@@ -83,8 +86,8 @@ class InfoActivity : ComponentActivity() {
         Row(
             Modifier
                 .fillMaxWidth()
-                .shadow(4.dp, RoundedCornerShape(4.dp))
-                .padding(top = 5.dp)
+                .shadow(1.dp)
+                .padding(top = 10.dp)
         ) {
             for (i in PageIcon.keys) {
                 Image(

@@ -14,7 +14,7 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.ddx.kt.ui.InfoActivity;
+import com.ddx.kt.ui.activity.InfoActivity;
 import com.example.androidfeature.activity.BarcodeActivity;
 import com.example.androidfeature.activity.BaseActivity;
 import com.example.androidfeature.activity.BezierCurveActivity;
