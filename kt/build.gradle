@@ -1,13 +1,16 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id "com.android.library"
+    id "kotlin-android"
+    id "kotlin-kapt"
 }
-apply from: '../common.gradle'
+apply from: '../common_library.gradle'
+apply from: '../common_dependency.gradle'
 dependencies {
     def room_version = "2.5.0"
-    implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    api("androidx.room:room-runtime:$room_version")
+    kapt "androidx.room:room-compiler:$room_version"
 
-    implementation "io.coil-kt:coil-compose:1.5.0"
-
+    implementation ("com.google.accompanist:accompanist-coil:0.10.0"){
+        exclude group: 'androidx.appcompat', module: 'appcompat-resources'
+    }
 }

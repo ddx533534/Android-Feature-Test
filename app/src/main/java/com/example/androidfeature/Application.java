@@ -6,6 +6,7 @@ import android.content.ServiceConnection;
 import android.os.IBinder;
 import android.util.Log;
 
+import com.ddx.kt.datamodel.UserDataBase;
 import com.example.androidfeature.service.NoteManager;
 import com.example.androidfeature.service.NoteService;
 
@@ -32,6 +33,7 @@ public class Application extends android.app.Application {
         super.onCreate();
         Intent intent = new Intent(this, NoteService.class);
         bindService(intent, serviceConnection, BIND_AUTO_CREATE);
+        UserDataBase.Companion.init(this);
     }
 
     @Override

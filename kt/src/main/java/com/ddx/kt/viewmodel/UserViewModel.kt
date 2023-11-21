@@ -18,7 +18,6 @@ enum class LoginState(val i: Int) {
 
 data class UserInfo(
     val name: String = "",
-    val password: String = "",
     val icon: String = "",
     val intro: String = "",
     val loginState: LoginState = LoginState.UNSIGNED
@@ -32,14 +31,15 @@ class UserViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            val user = UserDataBase.getInstance()?.userDao()?.getUser()
-            _userState.value.copy(
-                name = user?.name ?: "",
-                password = user?.password ?: "",
-                icon = user?.icon ?: "",
-                intro = user?.intro ?: "",
-                loginState = user?.loginState ?: LoginState.UNSIGNED,
-            )
+            suspend {
+                val user = UserDataBase.getInstance()?.userDao()?.getUser()
+                _userState.value.copy(
+                    name = user?.name ?: "",
+                    icon = user?.icon ?: "",
+                    intro = user?.intro ?: "",
+                    loginState = user?.loginState ?: LoginState.UNSIGNED,
+                )
+            }
         }
     }
 }

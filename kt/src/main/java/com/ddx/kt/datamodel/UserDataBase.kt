@@ -16,7 +16,7 @@ import com.ddx.kt.viewmodel.LoginState
 
 @Entity
 data class User(
-    @PrimaryKey val name: String?,
+    @PrimaryKey val name: String,
     @ColumnInfo(name = "password") val password: String?,
     @ColumnInfo(name = "icon") val icon: String?,
     @ColumnInfo(name = "intro") val intro: String?,
@@ -37,7 +37,7 @@ interface UserDao {
     fun delete(user: User)
 }
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class], version = 1, exportSchema = false)
 abstract class UserDataBase : RoomDatabase() {
     abstract fun userDao(): UserDao
 

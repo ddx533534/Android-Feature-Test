@@ -1,7 +1,6 @@
 
 android {
     defaultConfig {
-        applicationId "com.example.AndroidFeature"
         compileSdk 33
         minSdkVersion 27
         targetSdkVersion 33
@@ -38,19 +37,4 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion '1.3.1'
     }
-}
-dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:${versons['kotlin_version']}") {
-        force = true
-    }
-    // androidx appcompat
-    implementation 'androidx.appcompat:appcompat:1.0.0'
-    implementation 'androidx.core:core-ktx:1.7.0'
-
-    // jetpack compose
-    implementation "androidx.activity:activity-compose:${versons['compose_version']}"
-    implementation "androidx.compose.ui:ui:1.0.0"
-    implementation "androidx.compose.material:material:1.0.0"
-    implementation "androidx.compose.ui:ui-tooling:1.0.0"
-
 }

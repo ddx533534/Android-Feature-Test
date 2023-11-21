@@ -25,6 +25,7 @@ allprojects {
 
     repositories {
         //本地资源
+        google()
         mavenLocal()
         mavenCentral()
         //腾讯云maven镜像

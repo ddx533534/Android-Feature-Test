@@ -1,9 +1,50 @@
 plugins {
-    id 'com.android.application'
-    id 'org.jetbrains.kotlin.android'
+    id "com.android.application"
+    id "kotlin-android"
 }
-apply from: '../common.gradle'
+apply from: '../common_dependency.gradle'
+android {
+    defaultConfig {
+        applicationId "com.example.AndroidFeature"
+        compileSdk 33
+        minSdkVersion 27
+        targetSdkVersion 33
+        versionCode Integer.parseInt(project.VERSION_CODE)
+        versionName project.VERSION_NAME
+
+    }
+    signingConfigs {
+        sankuai {
+            //密钥的MD5 B3:54:61:04:73:E3:C7:D6:B8:E3:06:4C:11:53:3D:5C
+            storeFile file("keystore/meituan-debug.keystore")
+            storePassword "1234567"
+            keyAlias "meituan"
+            keyPassword "12345678"
+        }
+    }
+
+    buildTypes {
+        release {
+            signingConfig signingConfigs.sankuai
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    buildFeatures {
+        viewBinding true
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion '1.3.1'
+    }
+}
 dependencies {
+    api project(":kt")
     // recycleView
     implementation("androidx.recyclerview:recyclerview:1.3.2") {
         exclude group: 'org.jetbrains.kotlin', module: 'kotlin-stdlib'

@@ -1,44 +1,39 @@
 package com.ddx.kt.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.DisposableEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.FontFamily
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.ddx.kt.ui.widget.ImageTarget
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
 import com.ddx.kt.viewmodel.UserViewModel
 import com.example.androidfeature.R
+
+
+const val HOME = "home"
+const val ORDER = "order"
+const val PROFILE = "profile"
+val PageIcon =
+    mapOf(R.drawable.order to ORDER, R.drawable.home to HOME, R.drawable.profile to PROFILE)
 
 class InfoActivity : ComponentActivity() {
 
@@ -53,60 +48,79 @@ class InfoActivity : ComponentActivity() {
     }
 
     @Composable
-    fun welcome() {
-        val userState by userViewModel.userState.collectAsState()
-        Row {
-            Text(
-                text = "Hi ${userState.name}",
-                fontSize = 20.dp,
-                fontFamily = FontFamily.SansSerif,
-                color = Color.Red,
-                Modifier.weight(2.0f)
-            )
-            Image(
-            )
+    fun Page() {
+
+        var screenController = rememberNavController()
+
+        Column {
+            NavHost(
+                navController = screenController,
+                startDestination = HOME,
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(1.0f)
+            ) {
+                composable(ORDER) {
+                    Order()
+                }
+                composable(HOME) {
+                    Home(navHostController = screenController, userViewModel = userViewModel)
+                }
+                composable(PROFILE) {
+                    Profile(userViewModel = userViewModel)
+                }
+            }
+
+            BottomNavigation(screenController = screenController)
         }
+
     }
 
     @Composable
-    fun CircularAvatar() {
-        // 替换成你的头像图片 URL
-        val imageUrl = "https://example.com/your_avatar_url.jpg"
-
-        // 使用 rememberGlidePainter 函数加载头像图片
-        val painter = rememberGlidePainter(
-            request = imageUrl,
-            fadeIn = true
-        )
-
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
+    fun BottomNavigation(screenController: NavHostController) {
+        val current =
+            screenController.currentBackStackEntryAsState().value?.destination?.route ?: HOME
+        Row(
+            Modifier
+                .fillMaxWidth()
+                .shadow(4.dp, RoundedCornerShape(4.dp))
+                .padding(top = 5.dp)
         ) {
-            // 使用 Image 组件显示头像图片，并添加圆角效果
-            Image(
-                painter = painter,
-                contentDescription = "Avatar",
-                modifier = Modifier
-                    .size(150.dp)
-                    .clip(CircleShape)
-            )
+            for (i in PageIcon.keys) {
+                Image(
+                    painter = painterResource(id = i),
+                    contentDescription = PageIcon[i],
+                    Modifier
+                        .size(if (current != PageIcon[i]) 30.dp else 50.dp)
+                        .weight(1.0f)
+                        .align(Alignment.CenterVertically)
+                        .clickable {
+                            screenController.navigate(PageIcon[i] ?: HOME) {
+                                // 在导航到新页面之前清空后退栈
+                                popUpTo(screenController.graph.startDestinationId) {
+                                    saveState = true
+                                }
+                                // 避免在后退栈中创建多个相同的目标
+                                launchSingleTop = true
+                                // 将状态保存到新的目标
+                                restoreState = true
+                            }
+                        }
+                )
+            }
         }
     }
-
 
     @Preview
     @Composable
     fun mainContent() {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 5.dp)
+                .fillMaxSize()
         ) {
-            welcome()
+            Page()
         }
-
     }
+
+
 }

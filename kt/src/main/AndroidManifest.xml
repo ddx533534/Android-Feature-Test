@@ -5,6 +5,9 @@
 
     <application>
         <activity
+            android:name="com.ddx.kt.ui.LoginActivity"
+            android:exported="false" />
+        <activity
             android:name="com.ddx.kt.ui.InfoActivity"
             android:exported="false" />
     </application>
