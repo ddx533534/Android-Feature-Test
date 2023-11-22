@@ -1,7 +1,6 @@
 package com.ddx.kt.datamodel
 
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.room.ColumnInfo
 import androidx.room.Dao
 import androidx.room.Database
@@ -29,9 +28,12 @@ data class User(
 interface UserDao {
     @Query("SELECT * FROM user ORDER BY lastLoginTime DESC LIMIT 1")
     fun getUser(): User
+    @Query("SELECT * FROM user where name ==(:username)")
+    fun getUser(username: String): User
+
 
     @Query("SELECT * FROM user where name ==(:username) AND password ==(:password) LIMIT 1")
-    fun checkUser(username: String, password: String): User
+    fun checkUser(username: String, password: String): User?
 
     @Insert
     fun insert(vararg users: User)

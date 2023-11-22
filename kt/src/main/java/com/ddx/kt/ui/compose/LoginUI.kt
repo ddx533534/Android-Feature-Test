@@ -1,5 +1,6 @@
 package com.ddx.kt.ui.compose
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -17,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.OutlinedTextField
@@ -27,7 +29,6 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Send
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -41,11 +42,17 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.ddx.kt.viewmodel.LoginResult
 import com.ddx.kt.viewmodel.LoginState
-import com.ddx.kt.viewmodel.UserInfo
+import com.ddx.kt.viewmodel.SUCCESS
 import com.ddx.kt.viewmodel.UserViewModel
 import com.example.androidfeature.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 const val LOGIN = "Login"
 const val SIGNIN = "Sign In"
@@ -70,6 +77,10 @@ fun YellowThemeLoginScreen(userViewModel: UserViewModel) {
     var loginState by remember {
         // 登录状态初始为离线
         mutableStateOf(LoginState.OFFLINE)
+    }
+    var isLoading by remember {
+        // 登录状态初始为离线
+        mutableStateOf(false)
     }
     val coroutineScope = rememberCoroutineScope()
     MaterialTheme(
@@ -153,45 +164,35 @@ fun YellowThemeLoginScreen(userViewModel: UserViewModel) {
                 // Login Button
                 Button(
                     onClick = {
-                        coroutineScope.launch {
-                            var userInfo: UserInfo? = null
-                            userInfo = if (loginState == LoginState.UNSIGNED) {
-                                userViewModel.login(username, password)
-                            } else {
-                                userViewModel.signIn(username, password, password1)
+                        isLoading = true
+                        if (loginState == LoginState.UNSIGNED) {
+                            performSingIn(context, userViewModel, username, password, password1){
+                                isLoading = false
                             }
-//                            if (context is LoginActivity) {
-//                                val intent = Intent()
-//                                intent.putExtra("user", userInfo)
-//                                context.setResult(Activity.RESULT_OK, intent)
-//                            }
-                            if(userInfo != null && userInfo.loginState == LoginState.ONLINE){
-                                Toast.makeText(
-                                    context,
-                                    "Login Success",
-                                    Toast.LENGTH_LONG
-                                ).show()
-
-                            } else {
-                                Toast.makeText(
-                                    context,
-                                    "Login Failed",
-                                    Toast.LENGTH_LONG
-                                ).show()
+                        } else {
+                            performLogin(context, userViewModel, username, password) {
+                                isLoading = false
                             }
                         }
-
                     }, modifier = Modifier
                         .fillMaxWidth()
-                        .padding(8.dp)
+                        .padding(8.dp),
+                    enabled = !isLoading
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Icon(imageVector = Icons.Default.Send, contentDescription = null)
-                        Spacer(modifier = Modifier.width(4.dp))
-                        Text(if (loginState == LoginState.UNSIGNED) SIGNIN else LOGIN)
+                    if (isLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(16.dp),
+                            color = Color.White
+                        )
+                    } else {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Icon(imageVector = Icons.Default.Send, contentDescription = null)
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(if (loginState == LoginState.UNSIGNED) SIGNIN else LOGIN)
+                        }
                     }
                 }
                 Text(text = if (loginState == LoginState.UNSIGNED) "已有账号！立即登录！" else "没有账号？立即注册!",
@@ -217,7 +218,65 @@ fun YellowThemeLoginScreen(userViewModel: UserViewModel) {
     }
 }
 
+fun result(context: Context, loginResult: LoginResult?) {
+    loginResult?.let {
+        when (loginResult.loginCode) {
+            SUCCESS -> {
+                Toast.makeText(context, "success", Toast.LENGTH_LONG).show()
+            }
 
+            else -> {
+                Toast.makeText(context, "${loginResult.loginCode}", Toast.LENGTH_LONG).show()
+            }
+        }
+    }
+}
+// 通用的异步登录/注册函数
+suspend fun performAsyncOperation(
+    operation: suspend () -> LoginResult?
+): LoginResult? {
+    return withContext(Dispatchers.IO) {
+        operation.invoke()
+    }
+}
+// 登录
+fun performLogin(
+    context: Context,
+    userViewModel: UserViewModel,
+    username: String,
+    password: String,
+    callback:()->Unit
+) {
+    CoroutineScope(Dispatchers.Main).launch {
+        val asyncResult = performAsyncOperation() {
+            userViewModel.login(username, password)
+        }
+        delay(2000)
+//        val loginResult = asyncResult.await()
+        result(context, asyncResult)
+        callback()
+    }
+}
+
+// 注册
+fun performSingIn(
+    context: Context,
+    userViewModel: UserViewModel,
+    username: String,
+    password: String,
+    password1: String,
+    callback:()->Unit
+) {
+    CoroutineScope(Dispatchers.Main).launch {
+        val asyncResult = async(Dispatchers.IO) {
+            userViewModel.signIn(username, password, password1)
+        }
+        delay(2000)
+        val loginResult = asyncResult.await()
+        result(context, loginResult)
+        callback()
+    }
+}
 
 private val yellowThemeColors = lightColors(
     primary = Color(0xEEFF8C00), onPrimary = Color.Black
