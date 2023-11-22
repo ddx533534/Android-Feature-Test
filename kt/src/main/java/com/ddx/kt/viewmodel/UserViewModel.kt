@@ -1,9 +1,8 @@
 package com.ddx.kt.viewmodel
 
-import android.app.Application
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.room.Room
 import com.ddx.kt.datamodel.User
 import com.ddx.kt.datamodel.UserDataBase
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -42,17 +41,24 @@ class UserViewModel : ViewModel() {
     private val _userState = MutableStateFlow<UserInfo>(UserInfo())
     val userState = _userState.asStateFlow()
 
+    fun updateUserState(userState: UserInfo) {
+        _userState.value = userState
+    }
 
     init {
         viewModelScope.launch {
+            Log.d("userinfo", "init")
             suspend {
-                val user = UserDataBase.getInstance()?.userDao()?.getUser()
-                _userState.value.copy(
-                    name = user?.name ?: "",
-                    icon = user?.icon ?: "",
-                    intro = user?.intro ?: "",
-                    loginState = user?.loginState ?: LoginState.UNSIGNED,
-                )
+                UserDataBase.getInstance()?.userDao()?.getUser("ddx")?.let {
+                    Log.d("userinfo", it.toString())
+                    val newUserInfo = _userState.value.copy(
+                        name = it.name,
+                        icon = it.icon,
+                        intro = it.intro,
+                        loginState = it.loginState ?: LoginState.UNSIGNED,
+                    )
+                    updateUserState(newUserInfo)
+                }
             }
         }
     }

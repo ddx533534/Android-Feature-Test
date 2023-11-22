@@ -20,14 +20,14 @@ data class User(
     @ColumnInfo(name = "icon") val icon: String?,
     @ColumnInfo(name = "intro") val intro: String?,
     @ColumnInfo(name = "loginState") val loginState: LoginState?,
-    @ColumnInfo(name = "lastLoginTime") val lastOnlineTime: String?,
-
+    @ColumnInfo(name = "lastLoginTime") val lastOnlineTime: String,
     )
 
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user ORDER BY lastLoginTime DESC LIMIT 1")
     fun getUser(): User
+
     @Query("SELECT * FROM user where name ==(:username)")
     fun getUser(username: String): User
 

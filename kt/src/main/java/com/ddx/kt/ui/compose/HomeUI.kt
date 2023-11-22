@@ -10,6 +10,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Text
@@ -25,23 +26,32 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.ddx.kt.ui.activity.LoginActivity
+import com.ddx.kt.ui.activity.PROFILE
 import com.ddx.kt.viewmodel.LoginState
+import com.ddx.kt.viewmodel.UserInfo
 import com.ddx.kt.viewmodel.UserViewModel
 import com.example.androidfeature.R
 
 @Composable
-fun welcome(userViewModel: UserViewModel) {
+fun welcome(navHostController: NavHostController, userViewModel: UserViewModel) {
     val userState by userViewModel.userState.collectAsState()
     val context = LocalContext.current
     val launcher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
             when (result.resultCode) {
                 Activity.RESULT_OK -> {
-                    userState.copy(
-                        name = result.data?.getStringExtra("name") ?: "",
-                        icon = result.data?.getStringExtra("name") ?: "",
-                        intro = result.data?.getStringExtra("name") ?: "",
-                    )
+                    result.data?.getSerializableExtra("userInfo")?.let {
+                        if (it is UserInfo) {
+                            Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
+                            var newUserState = userState.copy(
+                                name = it.name,
+                                icon = it.icon,
+                                intro = it.intro,
+                                loginState = it.loginState
+                            )
+                            userViewModel.updateUserState(newUserState)
+                        }
+                    }
                 }
 
                 Activity.RESULT_CANCELED -> {
@@ -73,7 +83,10 @@ fun welcome(userViewModel: UserViewModel) {
             modifier = Modifier
                 .size(60.dp)
                 .clickable {
-                    launcher.launch(Intent(context, LoginActivity::class.java))
+                    when (userState.loginState) {
+                        LoginState.ONLINE -> navHostController.navigate(PROFILE)
+                        else -> launcher.launch(Intent(context, LoginActivity::class.java))
+                    }
                 }
                 .clip(CircleShape)
                 .border(2.dp, Color.Black, CircleShape)
@@ -83,7 +96,11 @@ fun welcome(userViewModel: UserViewModel) {
 
 @Composable
 fun Home(navHostController: NavHostController, userViewModel: UserViewModel) {
-    Column {
-        welcome(userViewModel = userViewModel)
+    Column(
+        modifier = Modifier.padding(
+            horizontal = 10.dp, vertical = 5.dp
+        )
+    ) {
+        welcome(navHostController, userViewModel = userViewModel)
     }
 }

@@ -1,6 +1,8 @@
 package com.ddx.kt.ui.compose
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -42,6 +44,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import com.ddx.kt.ui.activity.LoginActivity
 import com.ddx.kt.viewmodel.LoginResult
 import com.ddx.kt.viewmodel.LoginState
 import com.ddx.kt.viewmodel.SUCCESS
@@ -166,7 +169,7 @@ fun YellowThemeLoginScreen(userViewModel: UserViewModel) {
                     onClick = {
                         isLoading = true
                         if (loginState == LoginState.UNSIGNED) {
-                            performSingIn(context, userViewModel, username, password, password1){
+                            performSingIn(context, userViewModel, username, password, password1) {
                                 isLoading = false
                             }
                         } else {
@@ -220,17 +223,23 @@ fun YellowThemeLoginScreen(userViewModel: UserViewModel) {
 
 fun result(context: Context, loginResult: LoginResult?) {
     loginResult?.let {
-        when (loginResult.loginCode) {
-            SUCCESS -> {
-                Toast.makeText(context, "success", Toast.LENGTH_LONG).show()
-            }
-
-            else -> {
-                Toast.makeText(context, "${loginResult.loginCode}", Toast.LENGTH_LONG).show()
+        if (context is LoginActivity) {
+            when (loginResult.loginCode) {
+                SUCCESS -> {
+                    Toast.makeText(context, "success", Toast.LENGTH_LONG).show()
+                    val intent = Intent()
+                    intent.putExtra("userInfo", loginResult.userInfo)
+                    context.setResult(Activity.RESULT_OK, intent)
+                    context.finish()
+                }
+                else -> {
+                    Toast.makeText(context, "${loginResult.loginCode::class.java}", Toast.LENGTH_LONG).show()
+                }
             }
         }
     }
 }
+
 // 通用的异步登录/注册函数
 suspend fun performAsyncOperation(
     operation: suspend () -> LoginResult?
@@ -239,21 +248,21 @@ suspend fun performAsyncOperation(
         operation.invoke()
     }
 }
+
 // 登录
 fun performLogin(
     context: Context,
     userViewModel: UserViewModel,
     username: String,
     password: String,
-    callback:()->Unit
+    callback: () -> Unit
 ) {
     CoroutineScope(Dispatchers.Main).launch {
-        val asyncResult = performAsyncOperation() {
+        val loginResult = performAsyncOperation() {
             userViewModel.login(username, password)
         }
         delay(2000)
-//        val loginResult = asyncResult.await()
-        result(context, asyncResult)
+        result(context, loginResult)
         callback()
     }
 }
@@ -265,14 +274,13 @@ fun performSingIn(
     username: String,
     password: String,
     password1: String,
-    callback:()->Unit
+    callback: () -> Unit
 ) {
     CoroutineScope(Dispatchers.Main).launch {
-        val asyncResult = async(Dispatchers.IO) {
+        val loginResult = performAsyncOperation() {
             userViewModel.signIn(username, password, password1)
         }
         delay(2000)
-        val loginResult = asyncResult.await()
         result(context, loginResult)
         callback()
     }
