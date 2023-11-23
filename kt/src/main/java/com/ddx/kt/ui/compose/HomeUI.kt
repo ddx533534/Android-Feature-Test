@@ -34,41 +34,17 @@ import com.example.androidfeature.R
 
 @Composable
 fun welcome(navHostController: NavHostController, userViewModel: UserViewModel) {
-    val userState by userViewModel.userState.collectAsState()
     val context = LocalContext.current
     val launcher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.StartActivityForResult()) { result ->
-            when (result.resultCode) {
-                Activity.RESULT_OK -> {
-                    result.data?.getSerializableExtra("userInfo")?.let {
-                        if (it is UserInfo) {
-                            Toast.makeText(context, it.toString(), Toast.LENGTH_LONG).show()
-                            var newUserState = userState.copy(
-                                name = it.name,
-                                icon = it.icon,
-                                intro = it.intro,
-                                loginState = it.loginState
-                            )
-                            userViewModel.updateUserState(newUserState)
-                        }
-                    }
-                }
-
-                Activity.RESULT_CANCELED -> {
-                    Toast.makeText(context, "cancel", Toast.LENGTH_LONG).show()
-                }
-
-                else -> {
-                    Toast.makeText(context, "failed", Toast.LENGTH_LONG).show()
-                }
-            }
+        rememberLauncherForActivityResult(contract = LoginContract()) { result ->
+            result?.let { userViewModel.onUserInfoChanged(it) }
         }
     Row {
         Text(
             text = "Hi,${
-                when (userState.loginState) {
+                when (userViewModel.userState.loginState) {
                     LoginState.OFFLINE -> "Please Sign In"
-                    LoginState.ONLINE -> userState.name
+                    LoginState.ONLINE -> userViewModel.userState.name
                     else -> "Please Register!"
                 }
             }",
@@ -83,7 +59,7 @@ fun welcome(navHostController: NavHostController, userViewModel: UserViewModel) 
             modifier = Modifier
                 .size(60.dp)
                 .clickable {
-                    when (userState.loginState) {
+                    when (userViewModel.userState.loginState) {
                         LoginState.ONLINE -> navHostController.navigate(PROFILE)
                         else -> launcher.launch(Intent(context, LoginActivity::class.java))
                     }

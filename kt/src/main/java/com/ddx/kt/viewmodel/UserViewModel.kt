@@ -1,6 +1,10 @@
 package com.ddx.kt.viewmodel
 
+import android.os.Parcelable
 import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ddx.kt.datamodel.User
@@ -8,6 +12,7 @@ import com.ddx.kt.datamodel.UserDataBase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.parcelize.Parcelize
 import java.io.Serializable
 
 enum class LoginState(val i: Int) {
@@ -17,12 +22,13 @@ enum class LoginState(val i: Int) {
     UNKNOWN(3) //未知
 }
 
+@Parcelize
 data class UserInfo(
     val name: String = "",
     val icon: String? = "",
     val intro: String? = "",
     val loginState: LoginState = LoginState.UNSIGNED
-) : Serializable
+) : Parcelable
 
 const val SUCCESS = 1
 const val PASSWORD_WRONG = 2
@@ -38,12 +44,8 @@ data class LoginResult(
 ) : Serializable
 
 class UserViewModel : ViewModel() {
-    private val _userState = MutableStateFlow<UserInfo>(UserInfo())
-    val userState = _userState.asStateFlow()
+    var userState by mutableStateOf(value = UserInfo())
 
-    fun updateUserState(userState: UserInfo) {
-        _userState.value = userState
-    }
 
     init {
         viewModelScope.launch {
@@ -51,15 +53,25 @@ class UserViewModel : ViewModel() {
             suspend {
                 UserDataBase.getInstance()?.userDao()?.getUser("ddx")?.let {
                     Log.d("userinfo", it.toString())
-                    val newUserInfo = _userState.value.copy(
+                    userState = userState.copy(
                         name = it.name,
                         icon = it.icon,
                         intro = it.intro,
                         loginState = it.loginState ?: LoginState.UNSIGNED,
                     )
-                    updateUserState(newUserInfo)
                 }
             }
+        }
+    }
+
+    fun onUserInfoChanged(userInfo: UserInfo){
+        if(userState != userInfo){
+            userState = userState.copy(
+                name = userInfo.name,
+                icon = userInfo.icon,
+                intro = userInfo.intro,
+                loginState = userInfo.loginState
+            )
         }
     }
 
