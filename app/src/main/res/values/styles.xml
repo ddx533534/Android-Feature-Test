@@ -3,9 +3,15 @@
     <style name="Widget.Theme.AppCompat.Light.MyView" parent="">
         <item name="android:background">@color/gray_400</item>
     </style>
+
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-<!--        <item name="android:previewImage">@drawable/pic</item>-->
+        <!--        <item name="android:previewImage">@drawable/pic</item>-->
         <item name="android:windowDisablePreview">true</item>
-<!--        <item name="android:windowSplashscreenContent">@drawable/pic</item>-->
+        <!--        <item name="android:windowSplashscreenContent">@drawable/pic</item>-->
+    </style>
+
+    <style name="Widget.AppTheme.MyView" parent="">
+        <item name="android:background">@color/gray_400</item>
+        <item name="exampleColor">@color/light_blue_400</item>
     </style>
 </resources>

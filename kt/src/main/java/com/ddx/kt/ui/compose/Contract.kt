@@ -21,7 +21,7 @@ class LoginContract : ActivityResultContract<Any, UserInfo?>() {
 
     }
 
-    override fun createIntent(context: Context, input: Any?): Intent {
+    override fun createIntent(context: Context, input: Any): Intent {
         return Intent(context, LoginActivity::class.java)
     }
 

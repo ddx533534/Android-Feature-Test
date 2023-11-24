@@ -30,6 +30,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ddx.kt.ui.compose.Home
+import com.ddx.kt.ui.compose.NavGraph
 import com.ddx.kt.ui.compose.Order
 import com.ddx.kt.ui.compose.Profile
 import com.ddx.kt.ui.compose.REQUEST_CODE_ALBUM
@@ -56,69 +57,7 @@ class InfoActivity : ComponentActivity() {
         }
     }
 
-    @Composable
-    fun Page() {
-
-        var screenController = rememberNavController()
-
-        Column {
-            NavHost(
-                navController = screenController,
-                startDestination = HOME,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(1.0f)
-            ) {
-                composable(ORDER) {
-                    Order()
-                }
-                composable(HOME) {
-                    Home(navHostController = screenController, userViewModel = userViewModel)
-                }
-                composable(PROFILE) {
-                    Profile(userViewModel = userViewModel)
-                }
-            }
-
-            BottomNavigation(screenController = screenController)
-        }
-
-    }
-
-    @Composable
-    fun BottomNavigation(screenController: NavHostController) {
-        val current =
-            screenController.currentBackStackEntryAsState().value?.destination?.route ?: HOME
-        Row(
-            Modifier
-                .fillMaxWidth()
-                .shadow(1.dp)
-                .padding(top = 10.dp)
-        ) {
-            for (i in PageIcon.keys) {
-                Image(
-                    painter = painterResource(id = i),
-                    contentDescription = PageIcon[i],
-                    Modifier
-                        .size(if (current != PageIcon[i]) 30.dp else 50.dp)
-                        .weight(1.0f)
-                        .align(Alignment.CenterVertically)
-                        .clickable {
-                            screenController.navigate(PageIcon[i] ?: HOME) {
-                                // 在导航到新页面之前清空后退栈
-                                popUpTo(screenController.graph.startDestinationId) {
-                                    saveState = true
-                                }
-                                // 避免在后退栈中创建多个相同的目标
-                                launchSingleTop = true
-                                // 将状态保存到新的目标
-                                restoreState = true
-                            }
-                        }
-                )
-            }
-        }
-    }
+    
 
     @Preview
     @Composable
@@ -127,7 +66,7 @@ class InfoActivity : ComponentActivity() {
             modifier = Modifier
                 .fillMaxSize()
         ) {
-            Page()
+            NavGraph(userViewModel = userViewModel)
         }
     }
 

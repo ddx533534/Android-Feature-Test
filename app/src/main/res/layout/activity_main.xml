@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity">
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,6 +15,10 @@
         android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold" />
+    <com.example.androidfeature.widget.CustomScrollView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@color/light_blue_400"/>
     <ImageView
         android:id="@+id/pic"
         android:layout_width="50dp"
