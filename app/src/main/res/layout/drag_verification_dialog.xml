@@ -1,0 +1,80 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="拖动按钮完成验证"
+            android:textSize="16sp"
+            android:visibility="visible"
+            tools:layout_gravity="clip_horizontal" />
+
+        <RelativeLayout
+            android:layout_width="300dp"
+            android:layout_height="200dp"
+            android:orientation="vertical"
+            android:layout_gravity="center">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/background"
+                android:layout_width="400dp"
+                android:layout_height="200dp"
+                android:background="@color/gray_600"
+                android:orientation="vertical" />
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/target_des"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/white"
+                android:layout_marginStart="137dp"
+                android:orientation="vertical"
+                android:layout_alignStart="@id/background"/>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/target"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/light_blue_400"
+                android:orientation="vertical"
+                android:layout_alignStart="@id/background"/>
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/drag_group"
+                android:layout_alignBottom="@id/background"
+                android:layout_width="300dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/gray_400"
+                android:orientation="horizontal">
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/drag_left"
+                    android:layout_width="0dp"
+                    android:layout_height="30dp"
+                    android:background="#00FF00"
+                    android:orientation="vertical"
+                    android:layout_alignStart="@id/background"/>
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:id="@+id/drag"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@color/black"
+                    android:orientation="vertical" />
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+        </RelativeLayout>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</FrameLayout>

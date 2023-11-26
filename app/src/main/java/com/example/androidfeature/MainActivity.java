@@ -30,6 +30,8 @@ import com.example.androidfeature.arch.ui.PhotoActivity;
 import com.example.androidfeature.bean.Message;
 import com.example.androidfeature.bean.UserLocalDataSource;
 import com.example.androidfeature.bean.UserRepo;
+import com.example.androidfeature.widget.DragVerificationDialog;
+import com.example.androidfeature.widget.OnDragAction;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
@@ -60,7 +62,28 @@ public class MainActivity extends BaseActivity {
     }
 
     private void initButton() {
-        addButton(this, "测试二维码展示",   BarcodeActivity.class);
+        addButton(this, "测试拖动验证弹窗", v -> {
+            new DragVerificationDialog.Builder(this)
+                    .setCancelable(true)
+                    .setOnDragAction(new OnDragAction() {
+                        @Override
+                        public void onDragStart() {
+                            Log.d("drag","onDragStart");
+                        }
+
+                        @Override
+                        public void onDragSuccess() {
+                            Log.d("drag","onDragSuccess");
+                        }
+
+                        @Override
+                        public void onDragFail() {
+                            Log.d("drag","onDragFail");
+                        }
+                    })
+                    .show();
+        });
+        addButton(this, "测试二维码展示", BarcodeActivity.class);
         addButton(this, "测试 Dagger 注入", v -> {
             Toast.makeText(this, "UserRepo is null?" + (userRepo == null)
                     + "\n userRepo的信息" + (userRepo.userRemoteDataSource.name), Toast.LENGTH_SHORT).show();
@@ -80,8 +103,9 @@ public class MainActivity extends BaseActivity {
         addButton(this, "测试Rxjava", RxJavaActivity.class);
         addButton(this, "测试Binder", ServiceActivity.class);
         addButton(this, "测试内存泄露", GcActivity.class);
-        addButton(this, "测试图片展示",  PhotoActivity.class);
-        addButton(this, "测试个人信息",   InfoActivity.class);
+        addButton(this, "测试图片展示", PhotoActivity.class);
+        addButton(this, "测试个人信息", InfoActivity.class);
+
     }
 
 
