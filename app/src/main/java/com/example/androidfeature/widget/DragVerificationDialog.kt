@@ -9,11 +9,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
-import androidx.core.view.ViewGroupCompat
 import com.example.androidfeature.R
-import java.lang.Integer.min
-import java.lang.Math.abs
-import kotlin.math.max
 
 /**
  * TODO: document your custom view class.
