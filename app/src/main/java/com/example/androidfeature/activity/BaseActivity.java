@@ -1,5 +1,7 @@
 package com.example.androidfeature.activity;
 
+import static com.example.androidfeature.utils.Constants.LIFECYCLE_TAG;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -9,10 +11,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-
-import com.example.androidfeature.widget.CustomText;
-
-import static com.example.androidfeature.utils.Constants.LIFECYCLE_TAG;
+import android.widget.TextView;
 
 public class BaseActivity extends Activity {
 
@@ -23,7 +22,7 @@ public class BaseActivity extends Activity {
             @Override
             public View onCreateView(View parent, String name, Context context, AttributeSet attrs) {
                 if (!TextUtils.isEmpty(name) && name.contains("TextView")) {
-                    return new CustomText(context, attrs);
+                    return new TextView(context, attrs);
                 }
                 return null;
             }
