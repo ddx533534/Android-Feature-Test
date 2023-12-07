@@ -8,7 +8,7 @@ import android.util.Log
  */
 
 const val TAG = "HashRing"
-const val DEFAULT_MASK = 6
+const val DEFAULT_MASK = 5
 
 const val INSERT_SUCCEED = 0
 const val INSERT_EXCEED_LIMIT = -1
@@ -22,18 +22,19 @@ data class Node(val hashValue: Int, val resources: MutableMap<Int, String>) {
 
 class HashRing {
 
+    private var head: Node? = null
+    private var MASK: Int = DEFAULT_MASK
+    private var min = 0
+    private var max = 1.shl(MASK) - 1
+
     constructor() {
     }
 
-    constructor(hashRing: HashRing) {
-        this.head = hashRing.head
-        this.MASK = hashRing.MASK
+    constructor(ringSize: Int) {
+        this.MASK = ringSize
+        this.max = 1.shl(MASK) - 1
     }
 
-    private var head: Node? = null
-    private var MASK: Int = DEFAULT_MASK
-    private val min = 0
-    private val max = 1.shl(MASK - 1) - 1
 
     fun isHashLegal(hashValue: Int): Boolean = hashValue in min..max
 
@@ -111,15 +112,21 @@ class HashRing {
      * 将资源插入到对应节点中
      */
 
-    fun addResource(hashValue: Int) {
+    fun addResource(hashValue: Int): Int {
         if (!isHashLegal(hashValue)) {
-            return
+            return INSERT_EXCEED_LIMIT
         }
         val temp = lookupNode(hashValue)
-        temp?.let {
+        return temp?.let {
             var content = "Resource of file : $hashValue"
-            it.resources[hashValue] = content
-        }
+            if (!it.resources.containsKey(hashValue)) {
+                it.resources[hashValue] = content
+                INSERT_SUCCEED
+            } else {
+                INSERT_DUPLICATE
+            }
+
+        } ?: INSERT_ERROR
     }
 
 
@@ -149,9 +156,24 @@ class HashRing {
         } ?: mutableListOf<Int>()
     }
 
-    fun getRingSize(): Int {
+    fun getResources(): List<Int> {
+        return head?.let {
+            var temp = it
+            val list = mutableListOf<Int>()
+            do {
+                temp.resources.takeIf { map -> map.isNotEmpty() }.let {
+                    list.addAll(temp.resources.keys)
+                }
+                Log.d(TAG, "node ${temp.hashValue} - resources:${temp.resources.keys}")
+                temp = temp.next
+            } while (temp != it)
+            list.toList()
+        } ?: mutableListOf<Int>()
+    }
+
+    fun getRingCapacity(): Int {
         Log.d(TAG, "size:${max - min}")
-        return max - min
+        return max - min + 1
     }
 
     fun isHead(hashValue: Int): Boolean = head?.hashValue == hashValue

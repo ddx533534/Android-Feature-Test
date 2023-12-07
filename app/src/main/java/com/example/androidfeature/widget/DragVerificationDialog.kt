@@ -10,6 +10,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.appcompat.widget.LinearLayoutCompat
 import com.example.androidfeature.R
+import com.example.androidfeature.widget.custom.Coordinate
 
 /**
  * TODO: document your custom view class.

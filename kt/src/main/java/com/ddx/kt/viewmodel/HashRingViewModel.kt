@@ -7,29 +7,44 @@ import androidx.lifecycle.ViewModel
 import com.ddx.kt.HashRing
 
 
-data class HashRingState(var hashRing: HashRing)
+data class HashRingState(
+    var hashRing: HashRing,
+    var curNodeSize: Int,
+    var curResourceSize: Int
+)
 
 class HashRingViewModel : ViewModel() {
-    var hashRingState by mutableStateOf(value = HashRingState(HashRing()))
+    private var hashRingState by mutableStateOf(value = HashRingState(HashRing(), 0, 0))
+
+
+    fun newInstance(ringSize: Int) {
+        hashRingState =
+            hashRingState.copy(hashRing = HashRing(ringSize), curNodeSize = 0, curResourceSize = 0)
+    }
 
     fun insertNode(hashValue: Int): Int {
         val res = hashRingState.hashRing.insertNode(hashValue)
-        val ring = hashRingState.hashRing
-        hashRingState = hashRingState.copy(hashRing = HashRing(ring))
+        hashRingState = hashRingState.copy(curNodeSize = ++hashRingState.curNodeSize)
         return res
     }
 
-    fun getNodes(): List<Int> {
-        return hashRingState.hashRing.getNodes()
+    fun addResources(hashValue: Int): Int {
+        val res = hashRingState.hashRing.addResource(hashValue)
+        hashRingState = hashRingState.copy(curResourceSize = ++hashRingState.curResourceSize)
+        return res
     }
 
-    fun getRingSize(): Int {
-        return hashRingState.hashRing.getRingSize()
+    fun getNodes(): List<Int> = hashRingState.hashRing.getNodes()
+    fun getResources(): List<Int> = hashRingState.hashRing.getResources()
+
+    fun getRingCapacity(): Int {
+        return hashRingState.hashRing.getRingCapacity()
     }
 
     fun isHead(hashValue: Int): Boolean = hashRingState.hashRing.isHead(hashValue)
 
     fun clear() {
-        hashRingState = hashRingState.copy(hashRing = HashRing())
+        hashRingState.hashRing.clear()
+        hashRingState = hashRingState.copy(curResourceSize = 0, curNodeSize = 0)
     }
 }

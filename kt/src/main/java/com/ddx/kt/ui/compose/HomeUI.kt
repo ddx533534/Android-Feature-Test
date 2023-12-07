@@ -79,6 +79,6 @@ fun Home(navHostController: NavHostController, userViewModel: UserViewModel) {
         )
     ) {
         welcome(navHostController, userViewModel = userViewModel)
-        HashRingUI(hashRingViewModel = HashRingViewModel(),150,15)
+        HashRingUI(hashRingViewModel = HashRingViewModel(),150,12)
     }
 }

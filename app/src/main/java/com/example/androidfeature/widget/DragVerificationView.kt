@@ -1,15 +1,10 @@
 package com.example.androidfeature.widget
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import com.example.androidfeature.R
+import com.example.androidfeature.widget.custom.Coordinate
 
 /**
  * 滑块拖动验证弹窗布局
