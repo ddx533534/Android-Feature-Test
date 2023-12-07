@@ -1,16 +1,9 @@
-package com.example.androidfeature.widget
+package com.example.androidfeature.widget.custom
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.drawable.Drawable
-import android.text.TextPaint
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
-import com.example.androidfeature.R
 
 data class Coordinate(var x: Int, var y: Int)
 

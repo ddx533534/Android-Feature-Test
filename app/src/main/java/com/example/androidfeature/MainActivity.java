@@ -4,13 +4,16 @@ package com.example.androidfeature;
 import static com.example.androidfeature.utils.ViewUtils.addButton;
 
 import android.Manifest;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -68,20 +71,36 @@ public class MainActivity extends BaseActivity {
                     .setOnDragAction(new OnDragAction() {
                         @Override
                         public void onDragStart() {
-                            Log.d("drag","onDragStart");
+                            Log.d("drag", "onDragStart");
                         }
 
                         @Override
                         public void onDragSuccess() {
-                            Log.d("drag","onDragSuccess");
+                            Log.d("drag", "onDragSuccess");
                         }
 
                         @Override
                         public void onDragFail() {
-                            Log.d("drag","onDragFail");
+                            Log.d("drag", "onDragFail");
                         }
                     })
                     .show();
+        });
+        addButton(this, "跳转应用商店", new View.OnClickListener() {
+            String appPackageName = "com.sankuai.meituan.takeoutnew";
+
+            @Override
+            public void onClick(View v) {
+                try {
+                    Uri uri = Uri.parse("market://details?id=" + appPackageName);
+                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName);
+                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(goToMarket);
+                }
+            }
         });
         addButton(this, "测试二维码展示", BarcodeActivity.class);
         addButton(this, "测试 Dagger 注入", v -> {
@@ -105,7 +124,6 @@ public class MainActivity extends BaseActivity {
         addButton(this, "测试内存泄露", GcActivity.class);
         addButton(this, "测试图片展示", PhotoActivity.class);
         addButton(this, "测试个人信息", InfoActivity.class);
-
     }
 
 

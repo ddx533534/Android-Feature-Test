@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.ddx.kt.ui.activity.LoginActivity
 import com.ddx.kt.ui.activity.PROFILE
+import com.ddx.kt.viewmodel.HashRingViewModel
 import com.ddx.kt.viewmodel.LoginState
 import com.ddx.kt.viewmodel.UserInfo
 import com.ddx.kt.viewmodel.UserViewModel
@@ -78,5 +79,6 @@ fun Home(navHostController: NavHostController, userViewModel: UserViewModel) {
         )
     ) {
         welcome(navHostController, userViewModel = userViewModel)
+        HashRingUI(hashRingViewModel = HashRingViewModel(),150,15)
     }
 }

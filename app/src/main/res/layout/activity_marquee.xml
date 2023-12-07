@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context=".activity.MarqueeActivity">
 
-    <com.example.androidfeature.widget.MarqueeTextView
+    <com.example.androidfeature.widget.custom.MarqueeTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple_200"

@@ -41,7 +41,7 @@ fun NavGraph(userViewModel: UserViewModel) {
                 .weight(1.0f)
         ) {
             composable(ORDER) {
-                Order()
+                Order(100,8)
             }
             composable(HOME) {
                 Home(navHostController = screenController, userViewModel = userViewModel)
