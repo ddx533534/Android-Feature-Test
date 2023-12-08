@@ -73,6 +73,9 @@ fun HashRingUI(hashRingViewModel: HashRingViewModel, radius: Int, dotRadius: Int
         var showFingerTable by remember {
             mutableStateOf(false)
         }
+        var fingerValue by remember {
+            mutableStateOf("")
+        }
         val size = radius * 2
         val dotSize = dotRadius * 2
 
@@ -90,7 +93,6 @@ fun HashRingUI(hashRingViewModel: HashRingViewModel, radius: Int, dotRadius: Int
                     x = ((radius - dotRadius / 2) * kotlin.math.cos(Math.toRadians(angle.toDouble()))).toFloat(),
                     y = ((radius - dotRadius / 2) * kotlin.math.sin(Math.toRadians(angle.toDouble()))).toFloat()
                 )
-                Log.d("hashring", offset.toString())
                 Box(
                     modifier = Modifier
                         .size(if (hashRingViewModel.isHead(i)) (dotSize.toFloat() * 1.2).dp else dotSize.dp)
@@ -214,6 +216,37 @@ fun HashRingUI(hashRingViewModel: HashRingViewModel, radius: Int, dotRadius: Int
                 modifier = Modifier.weight(1f),
             ) {
                 Text("重置哈希环")
+            }
+        }
+        Spacer(modifier = Modifier.size(10.dp))
+
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            TextField(
+                modifier = Modifier.weight(4f),
+                value = fingerValue,
+                onValueChange = {
+                    fingerValue = it
+                },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                label = { Text("请输入指纹索引值(0-${hashRingViewModel.getRingCapacity() - 1})") }
+            )
+            Spacer(modifier = Modifier.size(10.dp))
+            Button(
+                onClick = {
+                    if (fingerValue.isNotEmpty() && fingerValue.toIntOrNull() != null) {
+                        var res = hashRingViewModel.peekResourceByFingerTable(fingerValue.toInt())
+                        Toast.makeText(
+                            context,
+                            if (res != null) "找到节点:$res" else "未找到!",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
+                    fingerValue = ""
+                },
+                modifier = Modifier.weight(1f),
+            ) {
+                Text("指纹表寻找")
             }
         }
         Button(

@@ -35,6 +35,8 @@ class HashRingViewModel : ViewModel() {
         return res
     }
 
+    fun peekResourceByFingerTable(hashValue: Int):Int? = hashRingState.hashRing.chordLookUp(hashValue)?.hashValue
+
     fun buildFingerTable() {
         hashRingState.hashRing.buildFingerTable()
         hashRingState.hashRing.printHashRing()

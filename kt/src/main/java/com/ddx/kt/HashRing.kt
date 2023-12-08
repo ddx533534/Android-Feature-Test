@@ -22,6 +22,10 @@ data class Node(
 ) {
     lateinit var pre: Node
     lateinit var next: Node
+
+    override fun toString(): String {
+        return "{$hashValue}"
+    }
 }
 
 class HashRing {
@@ -43,11 +47,11 @@ class HashRing {
     private fun isHashLegal(hashValue: Int): Boolean = hashValue in min..max
 
 
-    fun printHashRing(){
+    fun printHashRing() {
         head?.let {
             var temp = it
             do {
-                Log.d(TAG,"节点：${it.hashValue}, 资源:${it.resources}")
+                Log.d(TAG, "节点：${it.hashValue}, 资源:${it.resources}")
                 temp = temp.next
             } while (temp != it)
         }
@@ -101,6 +105,7 @@ class HashRing {
         }
         return if (head == null) {
             head = node
+            buildFingerTable()
             INSERT_SUCCEED
         } else {
             // successor
@@ -111,7 +116,8 @@ class HashRing {
                     node.pre = target.pre
                     node.next = target
                     target.pre = node
-                    moveResources(node, node.next, false)
+                    moveResources(node.next, node, false)
+                    buildFingerTable()
                     INSERT_SUCCEED
                 } else {
                     INSERT_DUPLICATE
@@ -120,6 +126,37 @@ class HashRing {
         }
     }
 
+    /**
+     * 删除节点
+     */
+
+    fun deleteNode(hashValue: Int) {
+        if (!isHashLegal(hashValue)) {
+            return
+        }
+        head?.let {
+            var temp = it
+            do {
+                if (temp.hashValue == hashValue) {
+                    // 命中头，并且只有一个头
+                    if(temp == head && temp.next == head){
+                        head = null
+                        return
+                    }
+                    // 命中头，把头移交到下一个
+                    if(temp == head){
+                        head = temp.next
+                    }
+                    temp.pre.next = temp.next
+                    temp.next.pre = temp.pre
+                    moveResources(temp, temp.next, true)
+                    return
+                }
+                temp = temp.next
+                INSERT_ERROR
+            } while (temp != it)
+        }
+    }
 
     /**
      * 插入资源
@@ -140,7 +177,6 @@ class HashRing {
             } else {
                 INSERT_DUPLICATE
             }
-
         } ?: INSERT_ERROR
     }
 
@@ -152,7 +188,8 @@ class HashRing {
     private fun moveResources(ori: Node, des: Node, delete: Boolean) {
         val deleteList = mutableListOf<Int>()
         for ((k, v) in ori.resources) {
-            if (distance(des.hashValue, k) < distance(ori.hashValue, k)) {
+            // 为什么节点的 hash 值在后面，因为遵从资源顺时针隶属于下一个最近节点，因此比较顺序不能出错
+            if (distance(k, des.hashValue) < distance(k, ori.hashValue)) {
                 des.resources[k] = v
                 deleteList.add(k)
             }
@@ -176,10 +213,49 @@ class HashRing {
                         temp.fingerTable[finger] = node
                     }
                 }
+                Log.d(TAG, "节点：${temp.hashValue}，指纹表：${temp.fingerTable}")
+                Log.d(TAG, "节点：${temp.hashValue}，资源表：${temp.resources}")
+
                 temp = temp.next
             } while (temp != it)
         }
     }
+
+
+    /**
+     * 指纹表索引
+     * 通过指纹表加速寻找资源对应节点的过程
+     */
+    fun chordLookUp(hashValue: Int): Node? {
+        if (!isHashLegal(hashValue)) {
+            return null
+        }
+        return head?.let { node ->
+            var temp: Node = node
+            do {
+                // 1.先找资源
+                if (temp.resources.containsKey(hashValue)) {
+                    return temp
+                }
+                // 2.再找指纹表，加速寻找
+                val map = node.fingerTable
+                // 3.寻找指纹表中最近的一个节点
+                var distance = Int.MAX_VALUE
+                map.forEach {
+                    if (distance > distance(hashValue, it.key)) {
+                        temp = it.value
+                        distance = distance(it.key, hashValue)
+                    }
+                }
+                if (temp.resources.containsKey(hashValue)) {
+                    return temp
+                }
+                // 跳出循环的条件就是找了一圈还没找到
+            } while (temp != node)
+            null
+        }
+    }
+
 
     fun getFingerTable(hashValue: Int): Map<Int, Node> {
         return head?.let {
