@@ -12,7 +12,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -74,11 +76,13 @@ fun welcome(navHostController: NavHostController, userViewModel: UserViewModel) 
 @Composable
 fun Home(navHostController: NavHostController, userViewModel: UserViewModel) {
     Column(
-        modifier = Modifier.padding(
-            horizontal = 10.dp, vertical = 5.dp
-        )
+        modifier = Modifier
+            .padding(
+                horizontal = 10.dp, vertical = 5.dp
+            )
+            .verticalScroll(rememberScrollState())
     ) {
         welcome(navHostController, userViewModel = userViewModel)
-        HashRingUI(hashRingViewModel = HashRingViewModel(),150,12)
+        HashRingUI(hashRingViewModel = HashRingViewModel(), 150, 12)
     }
 }

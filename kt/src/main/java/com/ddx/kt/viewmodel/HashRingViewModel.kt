@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.ddx.kt.HashRing
+import com.ddx.kt.Node
 
 
 data class HashRingState(
@@ -33,6 +34,14 @@ class HashRingViewModel : ViewModel() {
         hashRingState = hashRingState.copy(curResourceSize = ++hashRingState.curResourceSize)
         return res
     }
+
+    fun buildFingerTable() {
+        hashRingState.hashRing.buildFingerTable()
+        hashRingState.hashRing.printHashRing()
+    }
+
+    fun getFingerTable(hashValue: Int): Map<Int, Node> = hashRingState.hashRing.getFingerTable(hashValue)
+
 
     fun getNodes(): List<Int> = hashRingState.hashRing.getNodes()
     fun getResources(): List<Int> = hashRingState.hashRing.getResources()

@@ -9,11 +9,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Button
@@ -65,6 +69,9 @@ fun HashRingUI(hashRingViewModel: HashRingViewModel, radius: Int, dotRadius: Int
         }
         var resourceHash by remember {
             mutableStateOf("")
+        }
+        var showFingerTable by remember {
+            mutableStateOf(false)
         }
         val size = radius * 2
         val dotSize = dotRadius * 2
@@ -209,9 +216,61 @@ fun HashRingUI(hashRingViewModel: HashRingViewModel, radius: Int, dotRadius: Int
                 Text("重置哈希环")
             }
         }
+        Button(
+            onClick = {
+                hashRingViewModel.buildFingerTable()
+                showFingerTable = true
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
+        ) {
+            Text("构建指纹表")
+        }
+
+        if (showFingerTable) {
+            fingerTable(hashRingViewModel = hashRingViewModel)
+        }
+
     }
 
 }
+
+@Composable
+fun fingerTable(hashRingViewModel: HashRingViewModel) {
+    val nodes = hashRingViewModel.getNodes()
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
+        nodes.forEach { index ->
+            val map = hashRingViewModel.getFingerTable(index)
+            Log.d("hashring", "index:" + index)
+            map.forEach {
+                Row(
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp)
+                ) {
+                    Text(
+                        text = "节点 $index",
+                        modifier = Modifier.weight(1f),
+                        color = Color.Red
+                    )
+                    Text(
+                        text = "${it.key}",
+                        modifier = Modifier.weight(1f)
+                    )
+                    Text(
+                        text = "${it.value.hashValue}",
+                        modifier = Modifier.weight(1f)
+                    )
+                }
+            }
+        }
+    }
+}
+
 //
 //@Composable
 //fun DrawArrowOnArc(
