@@ -1,98 +1,87 @@
 package com.example.androidfeature.utils
 
-
-internal class LRUCache(capacity: Int) {
-    var capacity = 0
+class LRUCache {
+    var capacity: Int = 0
     var size = 0
     var head: Node? = null
     var tail: Node? = null
     var hashMap: HashMap<Int, Node>
 
-    init {
-        hashMap = HashMap(capacity shl 1)
+    constructor(capacity: Int) {
+        this.capacity = capacity
+        hashMap = HashMap(initialCapacity = 1.shl(capacity))
+        println("hashmap:${hashMap.size}")
     }
 
     operator fun get(key: Int): Int {
-        if (hashMap.containsKey(key)) {
-            val n = hashMap[key]
-            moveToHead(n)
-            return n!!.`val`
-        }
-        println(toString())
-        return -1
+        return hashMap[key]?.let {
+            moveToHead(it)
+            println(toString())
+            it.value
+        } ?: -1
     }
 
     fun put(key: Int, value: Int) {
-        val n = hashMap[key]
-        if (n == null) {
-            val N = Node(null, null, key, value)
-            hashMap[key] = N
-            N.next = head
-            head!!.pre = N
-            head = N
+        if (hashMap[key] == null) {
+            println("新节点放入")
+            val node = Node(null, null, key, value)
+            hashMap[key] = node
+            moveToHead(node)
             size++
             if (size > capacity) {
                 deleteTail()
             }
         } else {
-            moveToHead(n)
+            val node = hashMap[key]
+            node!!.value = value
+            moveToHead(node)
         }
         println(toString())
     }
 
-    fun moveToHead(n: Node?) {
-        if (n == null) {
+    private fun moveToHead(node: Node) {
+        if (head == null) {
+            node.next = node
+            node.pre = node
+            head = node
             return
         }
-        if (n === head) {
+        if (node == head) {
             return
-        } else if (n === tail) {
-            tail = n.pre
-            tail!!.next = null
-        } else {
-            //非头尾节点
-            n.pre!!.next = n.next
-            n.next!!.pre = n.pre
         }
-        n.next = head
-        head!!.pre = n
-        n.pre = null
-        head = n
+        // 1.拆节点
+        node.pre?.next = node.next
+        node.next?.pre = node.pre
+        // 2.按节点
+        node.next = head
+        head?.pre = node
+        // 3.更新head
+        head = node
     }
 
     fun deleteTail() {
-        if (tail == null) {
-            return
+        head?.let {
+            // 只有一个头
+            if (it.pre == it) {
+                head = null
+                return
+            }
+            it.pre?.pre = it
+            it.pre = it.pre?.pre
         }
-        hashMap.remove(tail!!.key)
-        if (tail!!.pre == null) {
-            head = null
-            tail = null
-            return
-        } else {
-            val pre = tail!!.pre!!
-            pre.next = null
-            tail = pre
-        }
+
     }
 
     override fun toString(): String {
-        val stringBuilder = StringBuilder()
-        var n = head
-        while (n != null) {
-            stringBuilder.append(
-                """
-                    ${n.key}:${n.`val`}
-                    
-                    """.trimIndent()
-            )
-            n = n.next
+        if (head == null) {
+            return "null"
         }
-        return """
-            LRUCache{size=$size
-            $stringBuilder}
-            """.trimIndent()
+        return hashMap.toString()
     }
 }
 
-internal class Node(var next: Node?, var pre: Node?, var key: Int, var `val`: Int)
+data class Node(var next: Node?, var pre: Node?, var key: Int, var value: Int){
+    override fun toString(): String {
+        return "{${key} - ${value}}"
+    }
+}
