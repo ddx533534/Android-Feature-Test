@@ -9,7 +9,7 @@ class LRUCache {
 
     constructor(capacity: Int) {
         this.capacity = capacity
-        hashMap = HashMap(initialCapacity = 1.shl(capacity))
+        hashMap = HashMap(1.shl(capacity))
         println("hashmap:${hashMap.size}")
     }
 

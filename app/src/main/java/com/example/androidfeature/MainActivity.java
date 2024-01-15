@@ -102,6 +102,22 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        addButton(this, "跳转App应用商店", new View.OnClickListener() {
+            String appPackageName = "com.sankuai.meituan.takeoutnew";
+
+            @Override
+            public void onClick(View v) {
+                try {
+                    Uri uri = Uri.parse("appmarket://details?id=" + appPackageName);
+                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(goToMarket);
+                } catch (ActivityNotFoundException e) {
+                    Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=" + appPackageName);
+                    Intent goToMarket = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(goToMarket);
+                }
+            }
+        });
         addButton(this, "测试二维码展示", BarcodeActivity.class);
         addButton(this, "测试 Dagger 注入", v -> {
             Toast.makeText(this, "UserRepo is null?" + (userRepo == null)
