@@ -4,6 +4,7 @@ package com.example.androidfeature;
 import static com.example.androidfeature.utils.ViewUtils.addButton;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,12 +13,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+
 import com.ddx.kt.ui.activity.InfoActivity;
+import com.example.androidfeature.activity.AnimationActivity;
 import com.example.androidfeature.activity.BarcodeActivity;
 import com.example.androidfeature.activity.BaseActivity;
 import com.example.androidfeature.activity.BezierCurveActivity;
@@ -28,6 +34,7 @@ import com.example.androidfeature.activity.MarqueeActivity;
 import com.example.androidfeature.activity.PicAnimationActivity;
 import com.example.androidfeature.activity.RotationActivity;
 import com.example.androidfeature.activity.RxJavaActivity;
+import com.example.androidfeature.activity.ScrollViewActivity;
 import com.example.androidfeature.activity.ServiceActivity;
 import com.example.androidfeature.arch.ui.PhotoActivity;
 import com.example.androidfeature.bean.Message;
@@ -35,11 +42,18 @@ import com.example.androidfeature.bean.UserLocalDataSource;
 import com.example.androidfeature.bean.UserRepo;
 import com.example.androidfeature.widget.DragVerificationDialog;
 import com.example.androidfeature.widget.OnDragAction;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetEncoder;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -64,7 +78,33 @@ public class MainActivity extends BaseActivity {
         initButton();
     }
 
+    class TextSpan {
+        String content;
+        int[] range;
+    }
+
     private void initButton() {
+        addButton(this, "测试中文长度", v -> {
+            String test = "[{content:123789aaabbb,range:[0, 12]}, {content:789,range:[3, 6]}\", \"{content:aaa,range:[6, 9]}\", \"{content:bbb,range:[9, 12]}\"]";
+//            ArrayList list  = new Gson().fromJson(test,new TypeToken<List<TextSpan>>(){}.getType());
+            test = "y̆";
+            test = "❤︎";
+            test = "한국어";
+            test = "Русский язык";
+            test = "עִבְרִית";
+            test = "㊊";
+            test = "اللغة العربية";
+
+            Toast.makeText(this, test + "length：" + test.length() + " chars: " + test.chars().count(), Toast.LENGTH_SHORT).show();
+        });
+        addButton(this, "测试过滤非 GBK 字符", v -> {
+            String test = "[{content:123789aaabbb,range:[0, 12]}, {content:789,range:[3, 6]}\", \"{content:aaa,range:[6, 9]}\", \"{content:bbb,range:[9, 12]}\"]";
+//            ArrayList list  = new Gson().fromJson(test,new TypeToken<List<TextSpan>>(){}.getType());
+            test = "❤︎ 我爱中国🇨🇳，不爱🇯🇵!";
+            test = filterNonGBKChar(test);
+            Toast.makeText(this, "【" + test + "】", Toast.LENGTH_SHORT).show();
+        });
+        addButton(this,"测试旋转动画", AnimationActivity.class);
         addButton(this, "测试拖动验证弹窗", v -> {
             new DragVerificationDialog.Builder(this)
                     .setCancelable(true)
@@ -102,6 +142,16 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        addButton(this, "跳转浏览器", new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String url = "https://www.baidu.com";
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+                startActivity(intent);
+            }
+        });
         addButton(this, "跳转App应用商店", new View.OnClickListener() {
             String appPackageName = "com.sankuai.meituan.takeoutnew";
 
@@ -118,6 +168,7 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
+        addButton(this, "启动scrollview 页面",  ScrollViewActivity.class);
         addButton(this, "测试二维码展示", BarcodeActivity.class);
         addButton(this, "测试 Dagger 注入", v -> {
             Toast.makeText(this, "UserRepo is null?" + (userRepo == null)
@@ -158,10 +209,10 @@ public class MainActivity extends BaseActivity {
                     null, null, null, null);
             while (cursor.moveToNext()) {
                 //获取联系人姓名
-                String displayName = cursor.getString(cursor
+                @SuppressLint("Range") String displayName = cursor.getString(cursor
                         .getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                 //获取联系人手机号
-                String number = cursor.getString(cursor
+                @SuppressLint("Range") String number = cursor.getString(cursor
                         .getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
                 Log.d("ContentResolver", displayName + " " + number);
             }
@@ -190,5 +241,19 @@ public class MainActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(Message msg) {
 
+    }
+
+    private CharsetEncoder gbkEncoder = Charset.forName("GBK").newEncoder();
+    public String filterNonGBKChar(String input){
+        if(TextUtils.isEmpty(input)){
+            return "";
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        for (char c : input.toCharArray()){
+            if(gbkEncoder.canEncode(c)){
+                stringBuilder.append(c);
+            }
+        }
+        return  stringBuilder.toString();
     }
 }

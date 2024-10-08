@@ -14,7 +14,4 @@ dependencies {
     implementation("com.google.accompanist:accompanist-coil:0.10.0") {
         exclude group: 'androidx.appcompat', module: 'appcompat-resources'
     }
-    implementation("com.zhihu.android:matisse:0.5.3-beta3") {
-        exclude group: 'androidx.appcompat', module: 'appcompat-resources'
-    }
 }

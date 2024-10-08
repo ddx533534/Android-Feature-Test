@@ -5,6 +5,7 @@ import static com.example.androidfeature.utils.Constants.LIFECYCLE_TAG;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -33,6 +34,8 @@ public class BaseActivity extends Activity {
             }
         });
         super.onCreate(savedInstanceState);
+        Configuration configuration = this.getResources().getConfiguration();
+        Log.d(getActivityName() + " configuration: " , configuration.toString());
     }
 
     @Override

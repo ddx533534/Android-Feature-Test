@@ -55,10 +55,14 @@
         android:layout_height="100dp"
         android:background="@color/light_blue_400" />
 
+    <EditText
+        android:layout_width="300dp"
+        android:layout_height="50dp"/>
+
     <ImageView
         android:id="@+id/pic"
         android:layout_width="50dp"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"/>
 
     <ScrollView
         android:layout_width="match_parent"

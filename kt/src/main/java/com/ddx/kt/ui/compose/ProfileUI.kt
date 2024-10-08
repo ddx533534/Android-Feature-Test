@@ -34,9 +34,6 @@ import com.ddx.kt.ui.activity.InfoActivity
 import com.ddx.kt.viewmodel.UserViewModel
 import com.google.accompanist.coil.rememberCoilPainter
 import com.google.accompanist.imageloading.ImageLoadState
-import com.zhihu.matisse.Matisse
-import com.zhihu.matisse.MimeType
-import com.zhihu.matisse.internal.entity.CaptureStrategy
 import kotlinx.coroutines.launch
 
 
@@ -80,22 +77,12 @@ fun UserProfilePage(userViewModel: UserViewModel) {
             sheetContent = {
                 Column {
                     TextButton(onClick = {
-                        Matisse.from(context as InfoActivity)
-                            .choose(MimeType.ofImage())
-                            .capture(true)
-                            .captureStrategy(CaptureStrategy(false,"com.example.AndroidFeature.FileProvider"))
-                            .maxSelectable(1)
-                            .forResult(REQUEST_CODE_CAPTURE)
+
                     }) {
                         Text("拍照")
                     }
                     TextButton(onClick = {
-                        Matisse.from(context as InfoActivity)
-                            .choose(MimeType.ofImage())
-                            .capture(false)
-                            .captureStrategy(CaptureStrategy(false,"com.example.AndroidFeature.FileProvider"))
-                            .maxSelectable(1)
-                            .forResult(REQUEST_CODE_ALBUM)
+
                     }) {
                         Text("相册")
                     }

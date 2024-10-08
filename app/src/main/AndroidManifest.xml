@@ -3,10 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.androidfeature">
 
+    <uses-sdk tools:overrideLibrary="com.example.androidfeature" />
+
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Application"
@@ -17,7 +19,16 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        tools:overrideLibrary="com.example.androidfeature"
         tools:replace="android:appComponentFactory,android:label">
+        <activity
+            android:name=".activity.ScrollViewActivity"
+            android:exported="false"
+            android:label="@string/title_activity_scroll_view"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.AnimationActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.BarcodeActivity"
             android:exported="false" />

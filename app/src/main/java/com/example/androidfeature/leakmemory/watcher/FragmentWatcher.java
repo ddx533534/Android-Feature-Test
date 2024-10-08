@@ -3,6 +3,7 @@ package com.example.androidfeature.leakmemory.watcher;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 
@@ -21,17 +22,19 @@ public class FragmentWatcher implements InstallWatcher {
         this.lifecycleCallbacks = new ActivityLifeCycleDefaultCallbacks() {
             @Override
             public void onActivityCreated(Activity activity, Bundle savedInstanceState) {
-                activity.getFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
-                    @Override
-                    public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
-                        objectWatcher.watch(f.getView(), f.getClass().getName() + ".view");
-                    }
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                    activity.getFragmentManager().registerFragmentLifecycleCallbacks(new FragmentManager.FragmentLifecycleCallbacks() {
+                        @Override
+                        public void onFragmentViewDestroyed(FragmentManager fm, Fragment f) {
+                            objectWatcher.watch(f.getView(), f.getClass().getName() + ".view");
+                        }
 
-                    @Override
-                    public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
-                        objectWatcher.watch(f, f.getClass().getName());
-                    }
-                }, true);
+                        @Override
+                        public void onFragmentDestroyed(FragmentManager fm, Fragment f) {
+                            objectWatcher.watch(f, f.getClass().getName());
+                        }
+                    }, true);
+                }
             }
         };
     }

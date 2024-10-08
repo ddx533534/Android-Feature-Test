@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -12,6 +13,8 @@ import android.view.View;
  * 根据手势绘制曲线，未采用double cache 技术，每次只能绘制一条直线
  */
 public class CurveView extends View {
+
+    private final String TAG = "ddx info";
 
     Paint paint;
 
@@ -42,17 +45,44 @@ public class CurveView extends View {
         paint.setColor(Color.RED);
         paint.setStyle(Paint.Style.STROKE);
         paint.setStrokeWidth(5);
+        paint.setAntiAlias(true);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int widthSpec = MeasureSpec.makeMeasureSpec(100, MeasureSpec.EXACTLY);
+        int heightSpec = MeasureSpec.makeMeasureSpec(100, MeasureSpec.EXACTLY);
+        Log.d(TAG, "onMeasure: system widthSpec: "
+                + MeasureSpec.getMode(widthMeasureSpec) + " width size: " + MeasureSpec.getSize(widthMeasureSpec)
+                + " heightSpec: " + MeasureSpec.getMode(heightMeasureSpec) + " height size: " + MeasureSpec.getSize(heightMeasureSpec)
+        );
+        super.onMeasure(widthSpec, heightSpec);
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        Log.d(TAG, "onLayout");
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawLine(preX,preY,curX,curY,paint);
+        Log.d(TAG, "onDraw canvas widht: "
+                + canvas.getWidth() + " height: " + canvas.getHeight());
+        canvas.drawLine(preX, preY, curX, curY, paint);
         preX = curX;
         preY = curY;
     }
 
-//    @Override
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        Log.d(TAG, "onSizeChanged widht: "
+                + w + " height: " + h);
+    }
+
+    //    @Override
 //    protected void onDraw(Canvas canvas) {
 //        super.onDraw(canvas);
 //        canvas.drawLine(preX,preY,curX,curY,paint);
