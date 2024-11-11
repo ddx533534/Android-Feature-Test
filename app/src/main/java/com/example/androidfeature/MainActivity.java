@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
-import com.ddx.kt.ui.activity.InfoActivity;
+//import com.ddx.kt.ui.activity.InfoActivity;
 import com.example.androidfeature.activity.AnimationActivity;
 import com.example.androidfeature.activity.BarcodeActivity;
 import com.example.androidfeature.activity.BaseActivity;
@@ -190,7 +190,7 @@ public class MainActivity extends BaseActivity {
         addButton(this, "测试Binder", ServiceActivity.class);
         addButton(this, "测试内存泄露", GcActivity.class);
         addButton(this, "测试图片展示", PhotoActivity.class);
-        addButton(this, "测试个人信息", InfoActivity.class);
+//        addButton(this, "测试个人信息", InfoActivity.class);
     }
 
 
