@@ -104,7 +104,7 @@ public class MainActivity extends BaseActivity {
             test = filterNonGBKChar(test);
             Toast.makeText(this, "【" + test + "】", Toast.LENGTH_SHORT).show();
         });
-        addButton(this,"测试旋转动画", AnimationActivity.class);
+        addButton(this, "测试旋转动画", AnimationActivity.class);
         addButton(this, "测试拖动验证弹窗", v -> {
             new DragVerificationDialog.Builder(this)
                     .setCancelable(true)
@@ -168,7 +168,7 @@ public class MainActivity extends BaseActivity {
                 }
             }
         });
-        addButton(this, "启动scrollview 页面",  ScrollViewActivity.class);
+        addButton(this, "启动scrollview 页面", ScrollViewActivity.class);
         addButton(this, "测试二维码展示", BarcodeActivity.class);
         addButton(this, "测试 Dagger 注入", v -> {
             Toast.makeText(this, "UserRepo is null?" + (userRepo == null)
@@ -244,16 +244,17 @@ public class MainActivity extends BaseActivity {
     }
 
     private CharsetEncoder gbkEncoder = Charset.forName("GBK").newEncoder();
-    public String filterNonGBKChar(String input){
-        if(TextUtils.isEmpty(input)){
+
+    public String filterNonGBKChar(String input) {
+        if (TextUtils.isEmpty(input)) {
             return "";
         }
         StringBuilder stringBuilder = new StringBuilder();
-        for (char c : input.toCharArray()){
-            if(gbkEncoder.canEncode(c)){
+        for (char c : input.toCharArray()) {
+            if (gbkEncoder.canEncode(c)) {
                 stringBuilder.append(c);
             }
         }
-        return  stringBuilder.toString();
+        return stringBuilder.toString();
     }
 }
