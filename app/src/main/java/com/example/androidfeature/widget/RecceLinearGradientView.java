@@ -9,6 +9,7 @@ import android.graphics.Path;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import java.util.Arrays;
@@ -97,6 +98,12 @@ public class RecceLinearGradientView extends View {
         this.colors = new int[]{-13213214, 23124};
         this.locations = null;
         this.mRoundedCornerRadius = new float[]{0f, 0f, 0f, 0f, 0f, 0f, 0f, 0f};
+        addOnLayoutChangeListener(new OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                Log.d("onLayoutChange", "width: " + (right - left) + " height: "+(bottom-  top) + " parent  width:" + ((View)v.getParent()).getWidth() + " height: " + ((View)v.getParent()).getHeight());
+            }
+        });
     }
 
     @Override
